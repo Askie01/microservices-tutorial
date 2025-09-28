@@ -36,7 +36,6 @@ public class LoanDTO {
     @PositiveOrZero(message = "Loan's repaid cannot be negative")
     private Integer repaid;
 
-    @NotNull(message = "Loan's remaining cannot be null")
-    @PositiveOrZero(message = "Loan's remaining cannot be negative")
+    @Null
     private Integer remaining;
 }

@@ -58,7 +58,14 @@ public class CoreLoanService implements LoanService {
                 .findByNumber(loanNumber)
                 .orElseThrow(() -> new LoanNotFoundException(loanNumber));
         LoanMapper.map(loanDTO, loan);
+        calculateRemaining(loan);
         return loanRepository.save(loan);
+    }
+
+    private void calculateRemaining(Loan loan) {
+        final Integer total = loan.getTotal();
+        final Integer repaid = loan.getRepaid();
+        loan.setRemaining(total - repaid);
     }
 
     @Override
