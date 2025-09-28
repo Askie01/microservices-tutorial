@@ -1,6 +1,8 @@
 package com.askie01.loans.exception;
 
+import com.askie01.loans.constants.ResponseCode;
 import com.askie01.loans.dto.ErrorResponseDTO;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -20,23 +22,15 @@ import java.util.Map;
 
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
-    /**
-     * Customize the handling of {@link MethodArgumentNotValidException}.
-     * <p>This method delegates to {@link #handleExceptionInternal}.
-     *
-     * @param ex      the exception to handle
-     * @param headers the headers to be written to the response
-     * @param status  the selected response status
-     * @param request the current request
-     * @return a {@code ResponseEntity} for the response to use, possibly
-     * {@code null} when the response is already committed
-     */
-    @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
-        final Map<String, String> validationErrors = new HashMap<>();
-        final List<ObjectError> validationErrorList = ex.getBindingResult().getAllErrors();
 
-        validationErrorList.forEach((error) -> {
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exception,
+                                                                  @NotNull HttpHeaders headers,
+                                                                  @NotNull HttpStatusCode status,
+                                                                  @NotNull WebRequest request) {
+        final Map<String, String> validationErrors = new HashMap<>();
+        final List<ObjectError> validationErrorList = exception.getBindingResult().getAllErrors();
+        validationErrorList.forEach(error -> {
             final String fieldName = ((FieldError) error).getField();
             final String validationMessage = error.getDefaultMessage();
             validationErrors.put(fieldName, validationMessage);
@@ -45,37 +39,34 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponseDTO> handleGlobalException(Exception exception, WebRequest webRequest) {
-        final ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(
-                webRequest.getDescription(false),
-                HttpStatus.INTERNAL_SERVER_ERROR,
-                exception.getMessage(),
-                LocalDateTime.now()
-        );
-        return new ResponseEntity<>(errorResponseDTO, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ErrorResponseDTO> handleResourceNotFoundException(ResourceNotFoundException exception, WebRequest webRequest) {
-        final ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(
-                webRequest.getDescription(false),
-                HttpStatus.NOT_FOUND,
-                exception.getMessage(),
-                LocalDateTime.now()
-        );
-
-        return new ResponseEntity<>(errorResponseDTO, HttpStatus.NOT_FOUND);
+    public ResponseEntity<ErrorResponseDTO> handleGlobalException(Exception exception,
+                                                                  WebRequest request) {
+        final String requestPath = request.getDescription(false);
+        final Integer statusCode = ResponseCode.INTERNAL_SERVER_ERROR;
+        final String errorMessage = exception.getMessage();
+        final LocalDateTime timestamp = LocalDateTime.now();
+        final ErrorResponseDTO response = ErrorResponseDTO.builder()
+                .path(requestPath)
+                .code(statusCode)
+                .message(errorMessage)
+                .timestamp(timestamp)
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(LoanAlreadyExistsException.class)
-    public ResponseEntity<ErrorResponseDTO> handleLoanAlreadyExistsException(LoanAlreadyExistsException exception, WebRequest webRequest) {
-        final ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(
-                webRequest.getDescription(false),
-                HttpStatus.BAD_REQUEST,
-                exception.getMessage(),
-                LocalDateTime.now()
-        );
-
-        return new ResponseEntity<>(errorResponseDTO, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<ErrorResponseDTO> handleLoanAlreadyExistsException(LoanAlreadyExistsException exception,
+                                                                             WebRequest request) {
+        final String requestPath = request.getDescription(false);
+        final Integer statusCode = ResponseCode.BAD_REQUEST;
+        final String errorMessage = exception.getMessage();
+        final LocalDateTime timestamp = LocalDateTime.now();
+        final ErrorResponseDTO response = ErrorResponseDTO.builder()
+                .path(requestPath)
+                .code(statusCode)
+                .message(errorMessage)
+                .timestamp(timestamp)
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }

@@ -43,7 +43,7 @@ public class CardController {
     }
 
     @GetMapping
-    public ResponseEntity<CardDTO> getCardDetails(@Pattern(regexp = "(^$|\\d{9})", message = "Mobile number must be 9 digits")
+    public ResponseEntity<CardDTO> getCard(@Pattern(regexp = "(^$|\\d{9})", message = "Mobile number must be 9 digits")
                                                   @RequestParam String mobileNumber) {
         final Card card = cardService.getCard(mobileNumber);
         final CardDTO cardDTO = CardMapper.mapToCardDTO(card);
@@ -51,7 +51,7 @@ public class CardController {
     }
 
     @PutMapping
-    public ResponseEntity<ResponseDTO> updateCardDetails(@Valid @RequestBody CardDTO cardDTO) {
+    public ResponseEntity<ResponseDTO> updateCard(@Valid @RequestBody CardDTO cardDTO) {
         cardService.updateCard(cardDTO);
         final ResponseDTO response = ResponseDTO.builder()
                 .code(ResponseCode.OK)
@@ -61,7 +61,7 @@ public class CardController {
     }
 
     @DeleteMapping
-    public ResponseEntity<ResponseDTO> deleteCardDetails(@Pattern(regexp = "(^$|\\d{9})", message = "Mobile number must be 9 digits")
+    public ResponseEntity<ResponseDTO> deleteCard(@Pattern(regexp = "(^$|\\d{9})", message = "Mobile number must be 9 digits")
                                                          @RequestParam String mobileNumber) {
         cardService.deleteCard(mobileNumber);
         final ResponseDTO response = ResponseDTO.builder()

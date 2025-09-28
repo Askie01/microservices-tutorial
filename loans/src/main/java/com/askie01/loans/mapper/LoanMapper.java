@@ -2,25 +2,39 @@ package com.askie01.loans.mapper;
 
 import com.askie01.loans.dto.LoanDTO;
 import com.askie01.loans.entity.Loan;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class LoanMapper {
-    public static LoanDTO mapToLoanDTO(Loan loan, LoanDTO loanDTO) {
-        loanDTO.setLoanNumber(loan.getLoanNumber());
-        loanDTO.setLoanType(loan.getLoanType());
-        loanDTO.setMobileNumber(loan.getMobileNumber());
-        loanDTO.setTotalLoan(loan.getTotalLoan());
-        loanDTO.setAmountPaid(loan.getAmountPaid());
-        loanDTO.setOutstandingAmount(loan.getOutstandingAmount());
+
+    public static LoanDTO mapToLoanDTO(Loan loan) {
+        final LoanDTO loanDTO = new LoanDTO();
+        map(loan, loanDTO);
         return loanDTO;
     }
 
-    public static Loan mapToLoan(LoanDTO loanDTO, Loan loan) {
-        loan.setLoanNumber(loanDTO.getLoanNumber());
-        loan.setLoanType(loanDTO.getLoanType());
-        loan.setMobileNumber(loanDTO.getMobileNumber());
-        loan.setTotalLoan(loanDTO.getTotalLoan());
-        loan.setAmountPaid(loanDTO.getAmountPaid());
-        loan.setOutstandingAmount(loanDTO.getOutstandingAmount());
+    public static void map(Loan source, LoanDTO target) {
+        target.setNumber(source.getNumber());
+        target.setType(source.getType());
+        target.setMobileNumber(source.getMobileNumber());
+        target.setTotal(source.getTotal());
+        target.setRepaid(source.getRepaid());
+        target.setRemaining(source.getRemaining());
+    }
+
+    public static Loan mapToLoan(LoanDTO loanDTO) {
+        final Loan loan = new Loan();
+        map(loanDTO, loan);
         return loan;
+    }
+
+    public static void map(LoanDTO source, Loan target) {
+        target.setNumber(source.getNumber());
+        target.setType(source.getType());
+        target.setMobileNumber(source.getMobileNumber());
+        target.setTotal(source.getTotal());
+        target.setRepaid(source.getRepaid());
+        target.setRemaining(source.getRemaining());
     }
 }
