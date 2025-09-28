@@ -1,25 +1,24 @@
 package org.askie01.accounts.entity;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToOne;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-@Data
-@Entity
-@Table(name = "accounts")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@SuperBuilder
+@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
+@Entity
 public class Account extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long accountId;
-
-    @OneToOne
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
-    private String accountType;
+    private String type;
     private String branchAddress;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Customer customer;
 }

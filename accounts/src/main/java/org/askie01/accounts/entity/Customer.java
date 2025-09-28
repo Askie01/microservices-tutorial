@@ -1,21 +1,18 @@
 package org.askie01.accounts.entity;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.Entity;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-@Data
-@Entity
-@Table(name = "customers")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@SuperBuilder
+@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
+@Entity
 public class Customer extends BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long customerId;
     private String name;
     private String email;
     private String mobileNumber;
