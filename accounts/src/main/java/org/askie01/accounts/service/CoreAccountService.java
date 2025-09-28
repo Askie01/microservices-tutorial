@@ -24,8 +24,7 @@ public class CoreAccountService implements AccountService {
     private final CustomerRepository customerRepository;
 
     @Override
-    public Account createAccount(AccountDTO accountDTO) {
-        final CustomerDTO customerDTO = accountDTO.getCustomerDTO();
+    public Account createAccount(CustomerDTO customerDTO) {
         final String mobileNumber = customerDTO.getMobileNumber();
         final boolean customerExists = customerRepository
                 .findByMobileNumber(mobileNumber)

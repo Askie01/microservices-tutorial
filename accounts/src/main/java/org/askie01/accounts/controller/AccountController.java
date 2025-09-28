@@ -7,6 +7,7 @@ import org.askie01.accounts.constant.ResponseCode;
 import org.askie01.accounts.constant.ResponseMessage;
 import org.askie01.accounts.dto.AccountContactInfoDTO;
 import org.askie01.accounts.dto.AccountDTO;
+import org.askie01.accounts.dto.CustomerDTO;
 import org.askie01.accounts.dto.ResponseDTO;
 import org.askie01.accounts.entity.Account;
 import org.askie01.accounts.mapper.AccountMapper;
@@ -32,8 +33,8 @@ public class AccountController {
     private final AccountContactInfoDTO accountContactInfoDto;
 
     @PostMapping
-    public ResponseEntity<ResponseDTO> createAccount(@Valid @RequestBody final AccountDTO accountDTO) {
-        accountService.createAccount(accountDTO);
+    public ResponseEntity<ResponseDTO> createAccount(@Valid @RequestBody CustomerDTO customerDTO) {
+        accountService.createAccount(customerDTO);
         final ResponseDTO response = ResponseDTO.builder()
                 .code(ResponseCode.CREATED)
                 .message(ResponseMessage.CREATED)
@@ -70,7 +71,7 @@ public class AccountController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/build-info")
+    @GetMapping("/build-version")
     public ResponseEntity<String> getBuildVersion() {
         return new ResponseEntity<>(buildVersion, HttpStatus.OK);
     }
@@ -87,7 +88,7 @@ public class AccountController {
         return new ResponseEntity<>(mavenVersion, HttpStatus.OK);
     }
 
-    @GetMapping("/contact-info")
+    @GetMapping("/contact-information")
     public ResponseEntity<AccountContactInfoDTO> getContactInfo() {
         return new ResponseEntity<>(accountContactInfoDto, HttpStatus.OK);
     }
