@@ -30,7 +30,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                                                                   @NotNull WebRequest request) {
         final Map<String, String> validationErrors = new HashMap<>();
         final List<ObjectError> validationErrorList = exception.getBindingResult().getAllErrors();
-
         validationErrorList.forEach(error -> {
             final String fieldName = ((FieldError) error).getField();
             final String validationMessage = error.getDefaultMessage();

@@ -16,7 +16,6 @@ import org.askie01.accounts.repositories.AccountRepository;
 import org.askie01.accounts.repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
 
-
 @Service
 @RequiredArgsConstructor
 public class CoreAccountService implements AccountService {

@@ -13,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode
 public class CustomerDTO {
 
-    @PositiveOrZero(message = "Account's id cannot be negative")
+    @PositiveOrZero(message = "Customer's id cannot be negative")
     private Long id;
 
     @NotBlank(message = "Customer's name cannot be null/empty/blank")
@@ -24,6 +24,7 @@ public class CustomerDTO {
     @Email(message = "Customer's email address should be a valid email value")
     private String email;
 
+    @NotBlank(message = "Customer's mobile number cannot be null/empty/blank")
     @Pattern(regexp = "(^$|\\d{9})", message = "Customer's mobile number must be 9 digits")
     private String mobileNumber;
 }

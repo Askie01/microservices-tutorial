@@ -1,37 +1,20 @@
 package com.askie01.cards.dto;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.http.HttpStatus;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(
-        description = "Schema to hold error response information"
-)
+@SuperBuilder
+@ToString
+@EqualsAndHashCode
 public class ErrorResponseDTO {
-    @Schema(
-            description = "API path invoked by client"
-    )
-    private String apiPath;
-
-    @Schema(
-            description = "Error code representing the error happened"
-    )
-    private HttpStatus errorCode;
-
-    @Schema(
-            description = "Error message representing the error happened"
-    )
-    private String errorMessage;
-
-    @Schema(
-            description = "Time representing when the error happened"
-    )
-    private LocalDateTime errorTime;
+    private String path;
+    private Integer code;
+    private String message;
+    private LocalDateTime timestamp;
 }

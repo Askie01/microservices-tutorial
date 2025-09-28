@@ -9,6 +9,7 @@ import org.askie01.accounts.entity.Customer;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AccountMapper {
+
     public static AccountDTO mapToAccountDTO(Account account) {
         final AccountDTO accountDTO = AccountDTO.builder()
                 .customerDTO(new CustomerDTO())
