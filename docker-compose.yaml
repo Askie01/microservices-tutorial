@@ -1,45 +1,31 @@
 services:
-  database:
-    image: "mysql:latest"
-    container_name: "mysql_database"
-    ports:
-      - 3307:3306
-    env_file:
-      - "db.env"
-    deploy:
-      resources:
-        limits:
-          memory: 700m
+
   accounts:
     image: "askie01/accounts:latest"
     container_name: "accounts-microservice"
     ports:
-      - 8080:8080
+      - "8080:8080"
     deploy:
       resources:
         limits:
           memory: 700m
-    env_file:
-      - "jpa.env"
+
   loans:
     image: "askie01/loans:latest"
     container_name: "loans-microservice"
     ports:
-      - 8090:8090
+      - "8090:8090"
     deploy:
       resources:
         limits:
           memory: 700m
-    env_file:
-      - "jpa.env"
+
   cards:
     image: "askie01/cards:latest"
     container_name: "cards-microservice"
     ports:
-      - 9000:9000
+      - "9000:9000"
     deploy:
       resources:
         limits:
           memory: 700m
-    env_file:
-      - "jpa.env"

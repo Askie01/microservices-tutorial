@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
 public class CardAlreadyExistsException extends RuntimeException {
-    public CardAlreadyExistsException(String message) {
-        super(message);
+    public CardAlreadyExistsException(String mobileNumber) {
+        super(String.format("Card with mobile number: '%s' already exists.", mobileNumber));
     }
 }

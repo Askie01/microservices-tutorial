@@ -1,55 +1,42 @@
 package com.askie01.loans.dto;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
-import lombok.Data;
+import jakarta.validation.constraints.*;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-@Data
-@Schema(
-        description = "Schema to hold Loan information"
-)
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@SuperBuilder
+@ToString
+@EqualsAndHashCode
 public class LoanDTO {
 
-    @NotEmpty(message = "Mobile number cannot be a null or empty")
-    @Pattern(regexp = "(^$|[0-9]{9})", message = "Mobile number must be a 9 digits")
-    @Schema(
-            description = "Loan number of the customer", example = "123456789"
-    )
+    @PositiveOrZero(message = "Loan's id cannot be negative")
+    private Long id;
+
+    @NotEmpty(message = "Loan's mobile number cannot be null/empty/blank")
+    @Pattern(regexp = "(^$|\\d{9})", message = "Loan's mobile number must be 9 digits")
     private String mobileNumber;
 
-    @NotEmpty(message = "Loan number cannot be a null or empty")
-    @Pattern(regexp = "(^$|[0-9]+)", message = "Loan number can only contain digits")
-    @Schema(
-            description = "Loan number of the customer", example = "1"
-    )
-    private String loanNumber;
+    @NotNull(message = "Loan's number cannot be null/empty/blank")
+    @Size(min = 12, max = 12, message = "Loan's number length have to be 12 digits")
+    private Long number;
 
+    @NotNull(message = "Loan's type cannot be null")
     @NotEmpty(message = "Loan type cannot be a null or empty")
-    @Schema(
-            description = "Type of the loan", example = "Home loan"
-    )
-    private String loanType;
+    private String type;
 
+    @NotNull(message = "Loan's total cannot be null")
+    @PositiveOrZero(message = "Loan's total cannot be negative")
+    private Integer total;
 
-    @Positive(message = "Total loan amount should be greater than zero")
-    @Schema(
-            description = "Total loan amount", example = "100000"
-    )
-    private int totalLoan;
+    @NotNull(message = "Loan's repaid cannot be null")
+    @PositiveOrZero(message = "Loan's repaid cannot be negative")
+    private Integer repaid;
 
-    @PositiveOrZero(message = "Total loan amount paid should be equal or greater than zero")
-    @Schema(
-            description = "Total loan amount paid", example = "1000"
-    )
-    private int amountPaid;
-
-    @PositiveOrZero(message = "Total outstanding amount should be equal or greater than zero")
-    @Schema(
-            description = "Total outstanding amount against a loan", example = "99000"
-    )
-    private int outstandingAmount;
-
+    @NotNull(message = "Loan's remaining cannot be null")
+    @PositiveOrZero(message = "Loan's remaining cannot be negative")
+    private Integer remaining;
 }

@@ -1,35 +1,26 @@
 package org.askie01.accounts.dto;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Pattern;
-import lombok.Data;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PositiveOrZero;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-@Data
-@Schema(
-        description = "Schema to hold Account information"
-)
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@SuperBuilder
+@ToString
+@EqualsAndHashCode
 public class AccountDTO {
 
-    @Schema(
-            description = "Account ID bound to specific customer's account.",
-            example = "1"
-    )
-    @NotEmpty(message = "AccountId cannot be null or empty")
-    @Pattern(regexp = "(^$[0-9])", message = "Account ID can only contain digits.")
-    private Long accountId;
+    @PositiveOrZero(message = "Account's id cannot be negative")
+    private Long id;
 
-    @Schema(
-            description = "Account type",
-            example = "AccountConstants.SAVINGS"
-    )
-    @NotEmpty(message = "AccountType cannot be null or empty")
-    private String accountType;
+    @NotBlank(message = "Account's type cannot be null/empty/blank")
+    private String type;
 
-    @Schema(
-            description = "Customer account ",
-            example = "125 Main Street, New York"
-    )
-    @NotEmpty(message = "BranchAddress cannot be null or empty")
+    @NotBlank(message = "Account's branch address cannot be null/empty/blank")
     private String branchAddress;
+    private CustomerDTO customerDTO;
 }

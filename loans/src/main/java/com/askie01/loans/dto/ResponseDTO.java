@@ -1,23 +1,16 @@
 package com.askie01.loans.dto;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
-@Schema(
-        description = "Schema to hold successful response information"
-)
+@SuperBuilder
+@ToString
+@EqualsAndHashCode
 public class ResponseDTO {
-
-    @Schema(
-            description = "Status code in the response"
-    )
-    private String statusCode;
-
-    @Schema(
-            description = "Status message in the response"
-    )
-    private String statusMessage;
+    private Integer code;
+    private String message;
 }

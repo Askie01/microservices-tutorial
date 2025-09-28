@@ -2,26 +2,39 @@ package com.askie01.cards.mapper;
 
 import com.askie01.cards.dto.CardDTO;
 import com.askie01.cards.entity.Card;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CardMapper {
 
-    public static CardDTO mapToCardDTO(Card card, CardDTO cardDTO) {
-        cardDTO.setCardNumber(card.getCardNumber());
-        cardDTO.setCardType(card.getCardType());
-        cardDTO.setMobileNumber(card.getMobileNumber());
-        cardDTO.setTotalLimit(card.getTotalLimit());
-        cardDTO.setAvailableAmount(card.getAvailableAmount());
-        cardDTO.setAmountUsed(card.getAmountUsed());
+    public static CardDTO mapToCardDTO(Card card) {
+        final CardDTO cardDTO = new CardDTO();
+        map(card, cardDTO);
         return cardDTO;
     }
 
-    public static Card mapToCard(CardDTO cardDTO, Card card) {
-        card.setCardNumber(cardDTO.getCardNumber());
-        card.setCardType(cardDTO.getCardType());
-        card.setMobileNumber(cardDTO.getMobileNumber());
-        card.setTotalLimit(cardDTO.getTotalLimit());
-        card.setAvailableAmount(cardDTO.getAvailableAmount());
-        card.setAmountUsed(card.getAmountUsed());
+    public static void map(Card source, CardDTO target) {
+        target.setNumber(source.getNumber());
+        target.setType(source.getType());
+        target.setMobileNumber(source.getMobileNumber());
+        target.setLimit(source.getLimit());
+        target.setBalance(source.getBalance());
+        target.setDebt(source.getDebt());
+    }
+
+    public static Card mapToCard(CardDTO cardDTO) {
+        final Card card = new Card();
+        map(cardDTO, card);
         return card;
+    }
+
+    public static void map(CardDTO source, Card target) {
+        target.setNumber(source.getNumber());
+        target.setType(source.getType());
+        target.setMobileNumber(source.getMobileNumber());
+        target.setLimit(source.getLimit());
+        target.setBalance(source.getBalance());
+        target.setDebt(target.getDebt());
     }
 }

@@ -1,27 +1,22 @@
 package com.askie01.cards.entity;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.Entity;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-@Data
-@Entity
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "cards")
+@SuperBuilder
+@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
+@Entity
 public class Card extends BaseEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long cardId;
-
     private String mobileNumber;
-    private String cardNumber;
-    private String cardType;
-    private int totalLimit;
-    private int amountUsed;
-    private int availableAmount;
+    private Long number;
+    private String type;
+    private Integer balance;
+    private Integer debt;
+    private Integer limit;
 }
