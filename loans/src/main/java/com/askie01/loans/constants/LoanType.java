@@ -5,5 +5,5 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class LoanType {
-    public static final String HOME = "Home loan";
+    public static final String HOME = "Home";
 }
