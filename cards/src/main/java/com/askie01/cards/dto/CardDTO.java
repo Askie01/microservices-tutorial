@@ -21,7 +21,8 @@ public class CardDTO {
     private String mobileNumber;
 
     @NotNull(message = "Card's number cannot be null")
-    @Size(min = 12, max = 12, message = "Card's number length have to be 12 digits")
+    @Min(value = 100_000_000_000L, message = "Card's number must be 12 digits")
+    @Max(value = 999_999_999_999L, message = "Card's number must be 12 digits")
     private Long number;
 
     @NotBlank(message = "Card's type cannot be null/empty/blank")

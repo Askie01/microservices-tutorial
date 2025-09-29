@@ -7,6 +7,4 @@ import java.util.Optional;
 
 public interface AccountRepository extends JpaRepository<Account, Long> {
     Optional<Account> findByCustomerMobileNumber(String mobileNumber);
-
-    void deleteByCustomerMobileNumber(String mobileNumber);
 }

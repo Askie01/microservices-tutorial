@@ -63,8 +63,8 @@ public class CoreCardService implements CardService {
 
     @Override
     public Card deleteCard(String mobileNumber) {
-        return cardRepository
-                .deleteByMobileNumber((mobileNumber))
-                .orElseThrow(() -> new CardNotFoundException(mobileNumber));
+        final Card card = getCard(mobileNumber);
+        cardRepository.delete(card);
+        return card;
     }
 }

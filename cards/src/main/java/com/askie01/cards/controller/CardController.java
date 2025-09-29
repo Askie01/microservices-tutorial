@@ -44,7 +44,7 @@ public class CardController {
 
     @GetMapping
     public ResponseEntity<CardDTO> getCard(@Pattern(regexp = "(^$|\\d{9})", message = "Mobile number must be 9 digits")
-                                                  @RequestParam String mobileNumber) {
+                                           @RequestParam String mobileNumber) {
         final Card card = cardService.getCard(mobileNumber);
         final CardDTO cardDTO = CardMapper.mapToCardDTO(card);
         return new ResponseEntity<>(cardDTO, HttpStatus.OK);
@@ -62,7 +62,7 @@ public class CardController {
 
     @DeleteMapping
     public ResponseEntity<ResponseDTO> deleteCard(@Pattern(regexp = "(^$|\\d{9})", message = "Mobile number must be 9 digits")
-                                                         @RequestParam String mobileNumber) {
+                                                  @RequestParam String mobileNumber) {
         cardService.deleteCard(mobileNumber);
         final ResponseDTO response = ResponseDTO.builder()
                 .code(ResponseCode.OK)
@@ -71,7 +71,7 @@ public class CardController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping(path = "/build-info")
+    @GetMapping(path = "/build-version")
     public ResponseEntity<String> getBuildVersion() {
         return new ResponseEntity<>(buildVersion, HttpStatus.OK);
     }
@@ -88,7 +88,7 @@ public class CardController {
         return new ResponseEntity<>(mavenVersion, HttpStatus.OK);
     }
 
-    @GetMapping(path = "/contact-info")
+    @GetMapping(path = "/contact-information")
     public ResponseEntity<CardContactInfoDTO> getContactInfo() {
         return new ResponseEntity<>(cardContactInfoDTO, HttpStatus.OK);
     }

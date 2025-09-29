@@ -21,8 +21,8 @@ public class LoanDTO {
     private String mobileNumber;
 
     @NotNull(message = "Loan's number cannot be null/empty/blank")
-    @Min(value = 100_000_000_000L, message = "Loan number must be 12 digits")
-    @Max(value = 999_999_999_999L, message = "Loan number must be 12 digits")
+    @Min(value = 100_000_000_000L, message = "Loan's number must be 12 digits")
+    @Max(value = 999_999_999_999L, message = "Loan's number must be 12 digits")
     private Long number;
 
     @NotNull(message = "Loan's type cannot be null")

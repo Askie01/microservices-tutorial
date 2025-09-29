@@ -9,6 +9,4 @@ public interface CardRepository extends JpaRepository<Card, Long> {
     Optional<Card> findByMobileNumber(String mobileNumber);
 
     Optional<Card> findByNumber(Long number);
-
-    Optional<Card> deleteByMobileNumber(String mobileNumber);
 }

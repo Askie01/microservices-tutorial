@@ -15,6 +15,7 @@ public class CardMapper {
     }
 
     public static void map(Card source, CardDTO target) {
+        target.setId(source.getId());
         target.setNumber(source.getNumber());
         target.setType(source.getType());
         target.setMobileNumber(source.getMobileNumber());
@@ -30,6 +31,7 @@ public class CardMapper {
     }
 
     public static void map(CardDTO source, Card target) {
+        target.setId(source.getId());
         target.setNumber(source.getNumber());
         target.setType(source.getType());
         target.setMobileNumber(source.getMobileNumber());
