@@ -2,7 +2,6 @@ package com.askie01.loans.exception;
 
 import com.askie01.loans.constants.ResponseCode;
 import com.askie01.loans.dto.ErrorResponseDTO;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -25,9 +24,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exception,
-                                                                  @NotNull HttpHeaders headers,
-                                                                  @NotNull HttpStatusCode status,
-                                                                  @NotNull WebRequest request) {
+                                                                  HttpHeaders headers,
+                                                                  HttpStatusCode status,
+                                                                  WebRequest request) {
         final Map<String, String> validationErrors = new HashMap<>();
         final List<ObjectError> validationErrorList = exception.getBindingResult().getAllErrors();
         validationErrorList.forEach(error -> {
