@@ -70,8 +70,8 @@ public class CoreLoanService implements LoanService {
 
     @Override
     public Loan deleteLoan(String mobileNumber) {
-        return loanRepository
-                .deleteByMobileNumber(mobileNumber)
-                .orElseThrow(() -> new LoanNotFoundException(mobileNumber));
+        final Loan loan = getLoan(mobileNumber);
+        loanRepository.delete(loan);
+        return loan;
     }
 }

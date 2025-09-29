@@ -68,4 +68,20 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .build();
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(LoanNotFoundException.class)
+    public ResponseEntity<ErrorResponseDTO> handleLoanNotFoundException(LoanNotFoundException exception,
+                                                                        WebRequest request) {
+        final String requestPath = request.getDescription(false);
+        final Integer statusCode = ResponseCode.NOT_FOUND;
+        final String errorMessage = exception.getMessage();
+        final LocalDateTime timestamp = LocalDateTime.now();
+        final ErrorResponseDTO response = ErrorResponseDTO.builder()
+                .path(requestPath)
+                .code(statusCode)
+                .message(errorMessage)
+                .timestamp(timestamp)
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
 }

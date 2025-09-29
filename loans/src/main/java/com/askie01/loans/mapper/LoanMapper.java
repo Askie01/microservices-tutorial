@@ -15,6 +15,7 @@ public class LoanMapper {
     }
 
     public static void map(Loan source, LoanDTO target) {
+        target.setId(source.getId());
         target.setNumber(source.getNumber());
         target.setType(source.getType());
         target.setMobileNumber(source.getMobileNumber());
@@ -30,6 +31,7 @@ public class LoanMapper {
     }
 
     public static void map(LoanDTO source, Loan target) {
+        target.setId(source.getId());
         target.setNumber(source.getNumber());
         target.setType(source.getType());
         target.setMobileNumber(source.getMobileNumber());

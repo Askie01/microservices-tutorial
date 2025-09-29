@@ -71,7 +71,7 @@ public class LoanController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping(path = "/build-info")
+    @GetMapping(path = "/build-version")
     public ResponseEntity<String> getBuildVersion() {
         return new ResponseEntity<>(buildVersion, HttpStatus.OK);
     }
@@ -88,7 +88,7 @@ public class LoanController {
         return new ResponseEntity<>(mavenVersion, HttpStatus.OK);
     }
 
-    @GetMapping(path = "/contact-info")
+    @GetMapping(path = "/contact-information")
     public ResponseEntity<LoanContactInfoDTO> getContactInfo() {
         return new ResponseEntity<>(loanContactInfoDTO, HttpStatus.OK);
     }

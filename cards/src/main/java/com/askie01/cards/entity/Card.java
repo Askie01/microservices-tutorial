@@ -18,5 +18,5 @@ public class Card extends BaseEntity {
     private String type;
     private Integer balance;
     private Integer debt;
-    private Integer limit;
+    private Integer moneyLimit;
 }

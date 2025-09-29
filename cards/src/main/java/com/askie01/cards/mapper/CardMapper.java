@@ -18,7 +18,7 @@ public class CardMapper {
         target.setNumber(source.getNumber());
         target.setType(source.getType());
         target.setMobileNumber(source.getMobileNumber());
-        target.setLimit(source.getLimit());
+        target.setLimit(source.getMoneyLimit());
         target.setBalance(source.getBalance());
         target.setDebt(source.getDebt());
     }
@@ -33,7 +33,7 @@ public class CardMapper {
         target.setNumber(source.getNumber());
         target.setType(source.getType());
         target.setMobileNumber(source.getMobileNumber());
-        target.setLimit(source.getLimit());
+        target.setMoneyLimit(source.getLimit());
         target.setBalance(source.getBalance());
         target.setDebt(target.getDebt());
     }

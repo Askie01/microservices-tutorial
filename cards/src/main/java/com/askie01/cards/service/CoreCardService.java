@@ -37,7 +37,7 @@ public class CoreCardService implements CardService {
                 .number(randomCardNumber)
                 .mobileNumber(mobileNumber)
                 .type(CardType.CREDIT)
-                .limit(CardLimit.ONE_HUNDRED_THOUSAND)
+                .moneyLimit(CardLimit.ONE_HUNDRED_THOUSAND)
                 .debt(0)
                 .balance(CardLimit.ONE_HUNDRED_THOUSAND)
                 .build();
