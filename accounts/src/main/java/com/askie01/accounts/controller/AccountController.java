@@ -2,7 +2,6 @@ package com.askie01.accounts.controller;
 
 import com.askie01.accounts.constant.ResponseCode;
 import com.askie01.accounts.constant.ResponseMessage;
-import com.askie01.accounts.dto.AccountContactInfoDTO;
 import com.askie01.accounts.dto.AccountDTO;
 import com.askie01.accounts.dto.CustomerDTO;
 import com.askie01.accounts.dto.ResponseDTO;
@@ -12,8 +11,6 @@ import com.askie01.accounts.service.AccountService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -26,11 +23,6 @@ import org.springframework.web.bind.annotation.*;
 public class AccountController {
 
     private final AccountService accountService;
-
-    @Value("${build.version}")
-    private String buildVersion;
-    private final Environment environment;
-    private final AccountContactInfoDTO accountContactInfoDto;
 
     @PostMapping
     public ResponseEntity<ResponseDTO> createAccount(@Valid @RequestBody CustomerDTO customerDTO) {
@@ -69,27 +61,5 @@ public class AccountController {
                 .message(ResponseMessage.OK)
                 .build();
         return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    @GetMapping("/build-version")
-    public ResponseEntity<String> getBuildVersion() {
-        return new ResponseEntity<>(buildVersion, HttpStatus.OK);
-    }
-
-    @GetMapping("/java-version")
-    public ResponseEntity<String> getJavaVersion() {
-        final String javaVersion = environment.getProperty("JAVA_HOME");
-        return new ResponseEntity<>(javaVersion, HttpStatus.OK);
-    }
-
-    @GetMapping("/maven-version")
-    public ResponseEntity<String> getMavenVersion() {
-        final String mavenVersion = environment.getProperty("MAVEN_HOME");
-        return new ResponseEntity<>(mavenVersion, HttpStatus.OK);
-    }
-
-    @GetMapping("/contact-information")
-    public ResponseEntity<AccountContactInfoDTO> getContactInfo() {
-        return new ResponseEntity<>(accountContactInfoDto, HttpStatus.OK);
     }
 }
