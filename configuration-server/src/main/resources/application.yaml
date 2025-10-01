@@ -19,7 +19,7 @@ spring:
           timeout: 5
           clone-on-start: true
           force-pull: true
-        default-label: master
+          default-label: master
 
   rabbitmq:
     host: localhost
@@ -47,4 +47,4 @@ management:
 
 logging:
   file:
-    name: configuration-server/src/main/java/com/askie01/configuration-server/logs/configuration-server-microservice.log
+    name: configuration-server/src/main/java/com/askie01/configurationserver/logs/configuration-server-microservice.log
