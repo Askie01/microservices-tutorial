@@ -17,7 +17,7 @@ import java.util.Map;
 @EqualsAndHashCode
 @Component
 @ConfigurationProperties(prefix = "loans")
-public class LoanContactInfoDTO {
+public class ContactInformationDTO {
     private String message;
     private Map<String, String> contactDetails;
     private List<Integer> onCallSupport;
