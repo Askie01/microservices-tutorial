@@ -44,7 +44,3 @@ management:
 
     readiness-state:
       enabled: true
-
-logging:
-  file:
-    name: configuration-server/src/main/java/com/askie01/configurationserver/logs/configuration-server-microservice.log
