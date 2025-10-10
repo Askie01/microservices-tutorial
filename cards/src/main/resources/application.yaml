@@ -9,7 +9,7 @@ spring:
     active: development
 
   config:
-    import: configserver:http://localhost:8071/
+    import: optional:configserver:http://localhost:8071/
 
   datasource:
     driver-class-name: org.h2.Driver
