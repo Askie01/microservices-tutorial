@@ -1,0 +1,90 @@
+services:
+
+  accounts:
+    image: "askie01/accounts:latest"
+    container_name: "accounts-microservice"
+    ports:
+      - "8080:8080"
+    environment:
+      - "spring.profiles.active=production"
+    extends:
+      file: docker-microservice-configuration.yaml
+      service: configuration-server-connection-configuration
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
+      start_period: 20s
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  loans:
+    image: "askie01/loans:latest"
+    container_name: "loans-microservice"
+    ports:
+      - "8090:8090"
+    environment:
+      - "spring.profiles.active=production"
+    extends:
+      file: docker-microservice-configuration.yaml
+      service: configuration-server-connection-configuration
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8090/actuator/health" ]
+      start_period: 20s
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  cards:
+    image: "askie01/cards:latest"
+    container_name: "cards-microservice"
+    ports:
+      - "9000:9000"
+    environment:
+      - "spring.profiles.active=production"
+    extends:
+      file: docker-microservice-configuration.yaml
+      service: configuration-server-connection-configuration
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:9000/actuator/health" ]
+      start_period: 20s
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  configuration-server:
+    image: "askie01/configuration-server:latest"
+    container_name: "configuration-server-microservice"
+    ports:
+      - "8071:8071"
+    extends:
+      file: docker-microservice-configuration.yaml
+      service: standard-microservice-configuration
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8071/actuator/health" ]
+      start_period: 20s
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  rabbitmq:
+    image: "rabbitmq:4-management"
+    container_name: "rabbitmq"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    stdin_open: true
+    tty: true
+    restart: "no"
+    healthcheck:
+      test: [ "CMD", "rabbitmq-diagnostics", "check_port_connectivity" ]
+      start_period: 10s
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    extends:
+      file: docker-microservice-configuration.yaml
+      service: network-configuration
+
+networks:
+  microservices-tutorial:
+    driver: "bridge"
