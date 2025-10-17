@@ -7,11 +7,30 @@ services:
       - "8080:8080"
     environment:
       - "spring.profiles.active=production"
+      - "spring.datasource.url=jdbc:mysql://accounts-database:3306/accounts-database"
     extends:
-      file: docker-microservice-configuration.yaml
-      service: configuration-server-connection-configuration
+      file: microservice-configuration.yaml
+      service: accounts-microservice-configuration
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
+      start_period: 20s
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  accounts-database:
+    image: "mysql:latest"
+    container_name: "accounts-database"
+    ports:
+      - "3306:3306"
+    environment:
+      - "MYSQL_ROOT_PASSWORD=root"
+      - "MYSQL_DATABASE=accounts-database"
+    extends:
+      file: microservice-configuration.yaml
+      service: network-configuration
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       start_period: 20s
       interval: 10s
       timeout: 5s
@@ -24,11 +43,30 @@ services:
       - "8090:8090"
     environment:
       - "spring.profiles.active=production"
+      - "spring.datasource.url=jdbc:mysql://loans-database:3306/loans-database"
     extends:
-      file: docker-microservice-configuration.yaml
-      service: configuration-server-connection-configuration
+      file: microservice-configuration.yaml
+      service: loans-microservice-configuration
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8090/actuator/health" ]
+      start_period: 20s
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  loans-database:
+    image: "mysql:latest"
+    container_name: "loans-database"
+    ports:
+      - "3307:3306"
+    environment:
+      - "MYSQL_ROOT_PASSWORD=root"
+      - "MYSQL_DATABASE=loans-database"
+    extends:
+      file: microservice-configuration.yaml
+      service: network-configuration
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       start_period: 20s
       interval: 10s
       timeout: 5s
@@ -41,11 +79,33 @@ services:
       - "9000:9000"
     environment:
       - "spring.profiles.active=production"
+      - "spring.datasource.url=jdbc:mysql://cards-database:3306/cards-database"
     extends:
-      file: docker-microservice-configuration.yaml
-      service: configuration-server-connection-configuration
+      file: microservice-configuration.yaml
+      service: cards-microservice-configuration
+    depends_on:
+      cards-database:
+        condition: service_healthy
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:9000/actuator/health" ]
+      start_period: 20s
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  cards-database:
+    image: "mysql:latest"
+    container_name: "cards-database"
+    ports:
+      - "3308:3306"
+    environment:
+      - "MYSQL_ROOT_PASSWORD=root"
+      - "MYSQL_DATABASE=cards-database"
+    extends:
+      file: microservice-configuration.yaml
+      service: network-configuration
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       start_period: 20s
       interval: 10s
       timeout: 5s
@@ -57,8 +117,8 @@ services:
     ports:
       - "8071:8071"
     extends:
-      file: docker-microservice-configuration.yaml
-      service: standard-microservice-configuration
+      file: microservice-configuration.yaml
+      service: common-microservice-configuration
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8071/actuator/health" ]
       start_period: 20s
@@ -82,9 +142,9 @@ services:
       timeout: 5s
       retries: 5
     extends:
-      file: docker-microservice-configuration.yaml
+      file: microservice-configuration.yaml
       service: network-configuration
 
 networks:
-  microservices-tutorial:
+  microservices-network:
     driver: "bridge"
