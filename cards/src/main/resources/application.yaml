@@ -12,19 +12,19 @@ spring:
     import: optional:configserver:http://localhost:8071/
 
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:embedded-database
+    url: jdbc:mysql://localhost:3308/cards-database
     username: root
     password: root
 
-  h2:
-    console:
-      enabled: true
-
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
+
+  sql:
+    init:
+      mode: always
+      schema-locations:
+        - classpath:schema/card-schema.sql
 
   rabbitmq:
     host: localhost
