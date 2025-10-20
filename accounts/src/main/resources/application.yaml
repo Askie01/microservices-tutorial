@@ -34,7 +34,31 @@ spring:
     password: guest
 
 management:
+  info:
+    env:
+      enabled: true
+
+  endpoint:
+    shutdown:
+      access: unrestricted
+
   endpoints:
     web:
       exposure:
         include: "*"
+
+eureka:
+  instance:
+    prefer-ip-address: true
+
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8070/eureka/
+
+info:
+  application:
+    name: accounts-microservice
+    description: Askie01's accounts microservice
+    version: 1.0.0
