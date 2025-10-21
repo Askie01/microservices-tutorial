@@ -23,6 +23,9 @@ services:
     container_name: "accounts-database"
     ports:
       - "3306:3306"
+    volumes:
+      - "../sql/accounts/schema:/docker-entrypoint-initdb.d"
+      - "../sql/accounts/data:/var/lib/mysql"
     environment:
       - "MYSQL_ROOT_PASSWORD=root"
       - "MYSQL_DATABASE=accounts-database"
