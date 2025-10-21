@@ -62,6 +62,9 @@ services:
     container_name: "loans-database"
     ports:
       - "3307:3306"
+    volumes:
+      - "../sql/loans/schema:/docker-entrypoint-initdb.d"
+      - "../sql/loans/data:/var/lib/mysql"
     environment:
       - "MYSQL_ROOT_PASSWORD=root"
       - "MYSQL_DATABASE=loans-database"
