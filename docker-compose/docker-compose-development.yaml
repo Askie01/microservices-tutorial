@@ -101,6 +101,9 @@ services:
     container_name: "cards-database"
     ports:
       - "3308:3306"
+    volumes:
+      - "../sql/cards/schema:/docker-entrypoint-initdb.d"
+      - "../sql/cards/data:/var/lib/mysql"
     environment:
       - "MYSQL_ROOT_PASSWORD=root"
       - "MYSQL_DATABASE=cards-database"
