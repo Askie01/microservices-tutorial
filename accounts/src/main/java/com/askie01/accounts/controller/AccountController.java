@@ -39,7 +39,7 @@ public class AccountController {
                                                  @RequestParam String mobileNumber) {
         final Account account = accountService.getAccount(mobileNumber);
         final AccountDTO accountDTO = AccountMapper.mapToAccountDTO(account);
-        return new ResponseEntity<>(accountDTO, HttpStatus.FOUND);
+        return new ResponseEntity<>(accountDTO, HttpStatus.OK);
     }
 
     @PutMapping
