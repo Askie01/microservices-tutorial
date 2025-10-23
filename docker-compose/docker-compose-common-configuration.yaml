@@ -1,0 +1,140 @@
+services:
+
+  network-configuration:
+    networks:
+      - "microservices-network"
+
+  common-configuration:
+    extends:
+      service: network-configuration
+
+    tty: true
+
+  common-microservice-configuration:
+    extends:
+      service: common-configuration
+
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+
+  business-logic-microservice-configuration:
+    extends:
+      service: common-microservice-configuration
+
+    environment:
+      - "spring.rabbitmq.host=rabbitmq"
+      - "spring.config.import=configserver:http://configuration-server:8071"
+      - "eureka.client.service-url.defaultZone=http://discovery-server:8070/eureka/"
+
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+      configuration-server:
+        condition: service_healthy
+
+      discovery-server:
+        condition: service_healthy
+
+  accounts-microservice-configuration:
+    extends:
+      service: business-logic-microservice-configuration
+
+    environment:
+      - "spring.datasource.url=jdbc:mysql://accounts-database:3306/accounts-database"
+
+    depends_on:
+      accounts-database:
+        condition: service_healthy
+
+      cards:
+        condition: service_healthy
+
+      loans:
+        condition: service_healthy
+
+  accounts-database-configuration:
+    extends:
+      service: common-configuration
+
+    volumes:
+      - "../sql/accounts/schema:/docker-entrypoint-initdb.d"
+      - "../sql/accounts/data/development:/var/lib/mysql"
+
+    environment:
+      - "MYSQL_ROOT_PASSWORD=root"
+      - "MYSQL_DATABASE=accounts-database"
+
+  loans-microservice-configuration:
+    extends:
+      service: business-logic-microservice-configuration
+
+    environment:
+      - "spring.datasource.url=jdbc:mysql://loans-database:3306/loans-database"
+
+    depends_on:
+      loans-database:
+        condition: service_healthy
+
+  loans-database-configuration:
+    extends:
+      service: common-configuration
+
+    volumes:
+      - "../sql/loans/schema:/docker-entrypoint-initdb.d"
+      - "../sql/loans/data/development:/var/lib/mysql"
+
+    environment:
+      - "MYSQL_ROOT_PASSWORD=root"
+      - "MYSQL_DATABASE=loans-database"
+
+  cards-microservice-configuration:
+    extends:
+      service: business-logic-microservice-configuration
+
+    environment:
+      - "spring.datasource.url=jdbc:mysql://cards-database:3306/cards-database"
+
+    depends_on:
+      cards-database:
+        condition: service_healthy
+
+  cards-database-configuration:
+    extends:
+      service: common-configuration
+
+    volumes:
+      - "../sql/cards/schema:/docker-entrypoint-initdb.d"
+      - "../sql/cards/data/development:/var/lib/mysql"
+
+    environment:
+      - "MYSQL_ROOT_PASSWORD=root"
+      - "MYSQL_DATABASE=cards-database"
+
+  configuration-server-microservice-configuration:
+    extends:
+      service: common-microservice-configuration
+
+    environment:
+      - "spring.rabbitmq.host=rabbitmq"
+
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+  discovery-server-microservice-configuration:
+    extends:
+      service: common-microservice-configuration
+
+    environment:
+      - "spring.config.import=configserver:http://configuration-server:8071"
+
+    depends_on:
+      configuration-server:
+        condition: service_healthy
+
+  rabbitmq-configuration:
+    extends:
+      service: common-configuration
