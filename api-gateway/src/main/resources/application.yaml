@@ -1,3 +1,35 @@
 spring:
   application:
     name: api-gateway
+
+  config:
+    import: optional:configserver:http://localhost:8071/
+
+  cloud:
+    gateway:
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: true
+              lower-case-service-id: true
+
+management:
+  info:
+    env:
+      enabled: true
+
+  endpoint:
+    gateway:
+      access: unrestricted
+
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+info:
+  application:
+    name: api-gateway-microservice
+    description: Askie01's api-gateway microservice
+    version: 1.0.0
