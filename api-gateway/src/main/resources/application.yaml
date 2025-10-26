@@ -33,3 +33,9 @@ info:
     name: api-gateway-microservice
     description: Askie01's api-gateway microservice
     version: 1.0.0
+
+logging:
+  level:
+    com:
+      askie01:
+        apigateway: DEBUG
