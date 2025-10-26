@@ -11,11 +11,13 @@ import com.askie01.accounts.service.AccountService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @Validated
 @RestController
 @RequiredArgsConstructor
@@ -25,12 +27,15 @@ public class AccountController {
     private final AccountService accountService;
 
     @PostMapping
-    public ResponseEntity<ResponseDTO> createAccount(@Valid @RequestBody CustomerDTO customerDTO) {
+    public ResponseEntity<ResponseDTO> createAccount(@RequestHeader(name = "request-id") String requestId,
+                                                     @Valid @RequestBody CustomerDTO customerDTO) {
+        log.atInfo().log("Creating account with request id: '{}'", requestId);
         accountService.createAccount(customerDTO);
         final ResponseDTO response = ResponseDTO.builder()
                 .code(ResponseCode.CREATED)
                 .message(ResponseMessage.CREATED)
                 .build();
+        log.atInfo().log("Created account with request id: '{}'", requestId);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
