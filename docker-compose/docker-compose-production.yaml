@@ -126,6 +126,21 @@ services:
       timeout: 5s
       retries: 5
 
+  api-gateway:
+    image: "askie01/api-gateway:latest"
+    container_name: "api-gateway-microservice"
+    ports:
+      - "8072:8072"
+    extends:
+      file: docker-compose-common-configuration.yaml
+      service: api-gateway-microservice-configuration
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8072/actuator/health" ]
+      start_period: 20s
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   rabbitmq:
     image: "rabbitmq:4-management"
     container_name: "rabbitmq"
