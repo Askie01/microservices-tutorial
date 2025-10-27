@@ -135,6 +135,26 @@ services:
       configuration-server:
         condition: service_healthy
 
+  api-gateway-microservice-configuration:
+    extends:
+      service: common-microservice-configuration
+
+    environment:
+      - "eureka.client.service-url.defaultZone=http://discovery-server:8070/eureka/"
+
+    depends_on:
+      accounts:
+        condition: service_healthy
+
+      cards:
+        condition: service_healthy
+
+      loans:
+        condition: service_healthy
+
+      discovery-server:
+        condition: service_healthy
+
   rabbitmq-configuration:
     extends:
       service: common-configuration
