@@ -20,7 +20,10 @@ public class Askie01RouteLocatorConfiguration {
                         .path("/askie01/accounts/**")
                         .filters(filter -> filter
                                 .rewritePath("/askie01/accounts/(?<segment>.*)", segmentReplacement)
-                                .addResponseHeader(responseTimeHeaderName, responseTimeHeaderValue))
+                                .addResponseHeader(responseTimeHeaderName, responseTimeHeaderValue)
+                                .circuitBreaker(config -> config
+                                        .setName("accounts-circuit-breaker")
+                                        .setFallbackUri("forward:/fallback/contact-support")))
                         .uri("lb://accounts"))
                 .route(path -> path
                         .path("askie01/cards/**")
