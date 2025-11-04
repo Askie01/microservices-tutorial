@@ -157,6 +157,18 @@ services:
       file: docker-compose-common-configuration.yaml
       service: rabbitmq-configuration
 
+  redis:
+    image: "redis:latest"
+    container_name: "redis"
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      start_period: 10s
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
 networks:
   microservices-network:
     driver: "bridge"
