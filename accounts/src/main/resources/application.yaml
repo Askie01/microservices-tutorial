@@ -76,6 +76,12 @@ resilience4j:
         retry-exceptions:
           - java.util.concurrent.TimeoutException
 
+  ratelimiter:
+    configs:
+      default:
+        timeout-duration: 1s
+        limit-refresh-period: 5s
+        limit-for-period: 1
 
 info:
   application:
