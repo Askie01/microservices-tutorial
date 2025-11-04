@@ -1,5 +1,8 @@
 package com.askie01.apigateway.configuration;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
+import org.springframework.cloud.gateway.filter.ratelimit.RedisRateLimiter;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
@@ -10,7 +13,11 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 @Configuration
+@RequiredArgsConstructor
 public class Askie01RouteLocatorConfiguration {
+
+    private final RedisRateLimiter redisRateLimiter;
+    private final KeyResolver userKeyResolver;
 
     @Bean
     public RouteLocator askie01RouteLocator(RouteLocatorBuilder routeLocatorBuilder) {
@@ -33,7 +40,10 @@ public class Askie01RouteLocatorConfiguration {
                         .path("askie01/cards/**")
                         .filters(filter -> filter
                                 .rewritePath("/askie01/cards/(?<segment>.*)", segmentReplacement)
-                                .addResponseHeader(responseTimeHeaderName, responseTimeHeaderValue))
+                                .addResponseHeader(responseTimeHeaderName, responseTimeHeaderValue)
+                                .requestRateLimiter(config -> config
+                                        .setRateLimiter(redisRateLimiter)
+                                        .setKeyResolver(userKeyResolver)))
                         .uri("lb://cards"))
                 .route(path -> path
                         .path("/askie01/loans/**")
