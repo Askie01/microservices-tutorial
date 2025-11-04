@@ -64,6 +64,19 @@ resilience4j:
         failure-rate-threshold: 50
         wait-duration-in-open-state: 10s
 
+  retry:
+    configs:
+      default:
+        max-attempts: 3
+        wait-duration: 100
+        enable-exponential-backoff: true
+        exponential-backoff-multiplier: 2
+        ignore-exceptions:
+          - java.lang.NullPointerException
+        retry-exceptions:
+          - java.util.concurrent.TimeoutException
+
+
 info:
   application:
     name: accounts-microservice
