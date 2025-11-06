@@ -2,7 +2,6 @@ package com.askie01.accounts.controller;
 
 import com.askie01.accounts.dto.ContactInformationDTO;
 import com.askie01.accounts.service.InformationService;
-import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,17 +16,10 @@ public class InformationController {
 
     private final InformationService informationService;
 
-    @Retry(name = "getBuildVersion", fallbackMethod = "getBuildVersionFallback")
     @GetMapping("/build-version")
     public ResponseEntity<String> getBuildVersion() {
         final String buildVersion = informationService.getBuildVersion();
-        throw new NullPointerException("Test exception");
-//        return new ResponseEntity<>(buildVersion, HttpStatus.OK);
-    }
-
-    public ResponseEntity<String> getBuildVersionFallback(Throwable throwable) {
-        System.out.println("The fallback has been called.");
-        return ResponseEntity.status(HttpStatus.OK).body("0.9");
+        return new ResponseEntity<>(buildVersion, HttpStatus.OK);
     }
 
     @GetMapping("/java-version")
