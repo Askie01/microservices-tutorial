@@ -2,6 +2,8 @@ package com.askie01.accounts.exception;
 
 import com.askie01.accounts.constant.ResponseCode;
 import com.askie01.accounts.dto.ErrorResponseDTO;
+import io.github.resilience4j.circuitbreaker.CallNotPermittedException;
+import org.springframework.cloud.client.circuitbreaker.NoFallbackAvailableException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -18,6 +20,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeoutException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
@@ -40,6 +43,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponseDTO> handleGlobalException(Exception exception,
                                                                   WebRequest request) {
+        final String exceptionType = exception.getClass().toString();
+        System.out.println(exceptionType);
         final String requestPath = request.getDescription(false);
         final Integer statusCode = ResponseCode.INTERNAL_SERVER_ERROR;
         final String errorMessage = exception.getMessage();
@@ -99,5 +104,53 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .timestamp(timestamp)
                 .build();
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(NoFallbackAvailableException.class)
+    public ResponseEntity<ErrorResponseDTO> handleNoFallbackAvailableException(NoFallbackAvailableException exception,
+                                                                               WebRequest request) {
+        final Throwable exceptionCause = exception.getCause();
+        final boolean isTimeoutException = exceptionCause instanceof TimeoutException;
+        if (isTimeoutException) {
+            return handleTimeoutException((TimeoutException) exceptionCause, request);
+        }
+
+        final boolean isCallNotPermittedException = exceptionCause instanceof CallNotPermittedException;
+        if (isCallNotPermittedException) {
+            return handleCallNotPermittedException((CallNotPermittedException) exceptionCause, request);
+        }
+        return handleGlobalException(exception, request);
+    }
+
+    @ExceptionHandler(CallNotPermittedException.class)
+    public ResponseEntity<ErrorResponseDTO> handleCallNotPermittedException(CallNotPermittedException exception,
+                                                                            WebRequest request) {
+        final String requestPath = request.getDescription(false);
+        final Integer statusCode = ResponseCode.SERVICE_UNAVAILABLE;
+        final String errorMessage = exception.getMessage();
+        final LocalDateTime timestamp = LocalDateTime.now();
+        final ErrorResponseDTO response = ErrorResponseDTO.builder()
+                .path(requestPath)
+                .code(statusCode)
+                .message(errorMessage)
+                .timestamp(timestamp)
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.SERVICE_UNAVAILABLE);
+    }
+
+    @ExceptionHandler(TimeoutException.class)
+    public ResponseEntity<ErrorResponseDTO> handleTimeoutException(TimeoutException exception,
+                                                                   WebRequest request) {
+        final String requestPath = request.getDescription(false);
+        final Integer statusCode = ResponseCode.REQUEST_TIMEOUT;
+        final String errorMessage = exception.getMessage();
+        final LocalDateTime timestamp = LocalDateTime.now();
+        final ErrorResponseDTO response = ErrorResponseDTO.builder()
+                .path(requestPath)
+                .code(statusCode)
+                .message(errorMessage)
+                .timestamp(timestamp)
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.REQUEST_TIMEOUT);
     }
 }
