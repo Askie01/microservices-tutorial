@@ -11,11 +11,6 @@ spring:
   config:
     import: optional:configserver:http://localhost:8071/
 
-  cloud:
-    openfeign:
-      circuitbreaker:
-        enabled: true
-
   datasource:
     url: jdbc:mysql://localhost:3306/accounts-database
     username: root
@@ -57,6 +52,13 @@ eureka:
 
 resilience4j:
   circuitbreaker:
+    instances:
+      cards-api-client-circuit-breaker:
+        base-config: default
+
+      loans-api-client-circuit-breaker:
+        base-config: default
+
     configs:
       default:
         sliding-window-size: 10
@@ -64,24 +66,35 @@ resilience4j:
         failure-rate-threshold: 50
         wait-duration-in-open-state: 10s
 
-  retry:
-    configs:
-      default:
-        max-attempts: 3
-        wait-duration: 100
-        enable-exponential-backoff: true
-        exponential-backoff-multiplier: 2
-        ignore-exceptions:
-          - java.lang.NullPointerException
-        retry-exceptions:
-          - java.util.concurrent.TimeoutException
+  timelimiter:
+    instances:
+      cards-api-client-time-limiter:
+        base-config: default
 
-  ratelimiter:
+      loans-api-client-time-limiter:
+        base-config: default
+
     configs:
       default:
         timeout-duration: 1s
-        limit-refresh-period: 5s
-        limit-for-period: 1
+        cancel-running-future: true
+
+  retry:
+    instances:
+      cards-api-client-retry:
+        base-config: default
+
+      loans-api-client-retry:
+        base-config: default
+
+    configs:
+      default:
+        max-attempts: 5
+        wait-duration: 100ms
+        enable-exponential-backoff: true
+        exponential-backoff-multiplier: 2
+        retry-exceptions:
+          - java.util.concurrent.TimeoutException
 
 info:
   application:
