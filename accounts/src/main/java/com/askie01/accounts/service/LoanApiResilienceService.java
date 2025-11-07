@@ -16,6 +16,7 @@ public class LoanApiResilienceService implements LoanResilienceService {
 
     private final LoansApiClient loansApiClient;
 
+    @Override
     @CircuitBreaker(name = "loans-api-client-circuit-breaker")
     @TimeLimiter(name = "loans-api-client-time-limiter")
     @Retry(name = "loans-api-client-retry")
