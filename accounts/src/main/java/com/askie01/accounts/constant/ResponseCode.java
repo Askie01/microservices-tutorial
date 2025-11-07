@@ -9,6 +9,8 @@ public class ResponseCode {
     public static final Integer CREATED = 201;
     public static final Integer BAD_REQUEST = 400;
     public static final Integer NOT_FOUND = 404;
+    public static final Integer REQUEST_TIMEOUT = 408;
     public static final Integer EXPECTATION_FAILED = 417;
     public static final Integer INTERNAL_SERVER_ERROR = 500;
+    public static final Integer SERVICE_UNAVAILABLE = 503;
 }
