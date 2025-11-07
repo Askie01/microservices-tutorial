@@ -1,5 +1,6 @@
 package com.askie01.apigateway.configuration;
 
+import com.askie01.apigateway.resolver.UserKeyResolver;
 import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

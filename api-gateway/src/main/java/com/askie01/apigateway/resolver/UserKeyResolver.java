@@ -1,4 +1,4 @@
-package com.askie01.apigateway.configuration;
+package com.askie01.apigateway.resolver;
 
 import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
 import org.springframework.web.server.ServerWebExchange;
