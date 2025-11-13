@@ -141,6 +141,7 @@ services:
 
     environment:
       - "eureka.client.service-url.defaultZone=http://discovery-server:8070/eureka/"
+      - "spring.data.redis.host=redis"
 
     depends_on:
       accounts:
@@ -156,5 +157,9 @@ services:
         condition: service_healthy
 
   rabbitmq-configuration:
+    extends:
+      service: common-configuration
+
+  redis-configuration:
     extends:
       service: common-configuration

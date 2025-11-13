@@ -162,6 +162,9 @@ services:
     container_name: "redis"
     ports:
       - "6379:6379"
+    extends:
+      file: docker-compose-common-configuration.yaml
+      service: redis-configuration
     healthcheck:
       test: [ "CMD", "redis-cli", "ping" ]
       start_period: 10s
