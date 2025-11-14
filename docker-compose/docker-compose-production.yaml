@@ -8,7 +8,7 @@ services:
     environment:
       - "spring.profiles.active=production"
     extends:
-      file: docker-compose-common-configuration.yaml
+      file: configuration/accounts-microservice-configuration.yaml
       service: accounts-microservice-configuration
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
@@ -23,7 +23,7 @@ services:
     ports:
       - "3306:3306"
     extends:
-      file: docker-compose-common-configuration.yaml
+      file: configuration/accounts-database-configuration.yaml
       service: accounts-database-configuration
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
@@ -40,7 +40,7 @@ services:
     environment:
       - "spring.profiles.active=production"
     extends:
-      file: docker-compose-common-configuration.yaml
+      file: configuration/loans-microservice-configuration.yaml
       service: loans-microservice-configuration
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8090/actuator/health" ]
@@ -55,7 +55,7 @@ services:
     ports:
       - "3307:3306"
     extends:
-      file: docker-compose-common-configuration.yaml
+      file: configuration/loans-database-configuration.yaml
       service: loans-database-configuration
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
@@ -72,7 +72,7 @@ services:
     environment:
       - "spring.profiles.active=production"
     extends:
-      file: docker-compose-common-configuration.yaml
+      file: configuration/cards-microservice-configuration.yaml
       service: cards-microservice-configuration
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:9000/actuator/health" ]
@@ -87,7 +87,7 @@ services:
     ports:
       - "3308:3306"
     extends:
-      file: docker-compose-common-configuration.yaml
+      file: configuration/cards-database-configuration.yaml
       service: cards-database-configuration
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
@@ -102,7 +102,7 @@ services:
     ports:
       - "8071:8071"
     extends:
-      file: docker-compose-common-configuration.yaml
+      file: configuration/configuration-server-microservice-configuration.yaml
       service: configuration-server-microservice-configuration
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8071/actuator/health" ]
@@ -117,7 +117,7 @@ services:
     ports:
       - "8070:8070"
     extends:
-      file: docker-compose-common-configuration.yaml
+      file: configuration/discovery-server-configuration.yaml
       service: discovery-server-microservice-configuration
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8070/actuator/health" ]
@@ -132,7 +132,7 @@ services:
     ports:
       - "8072:8072"
     extends:
-      file: docker-compose-common-configuration.yaml
+      file: configuration/api-gateway-microservice-configuration.yaml
       service: api-gateway-microservice-configuration
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8072/actuator/health" ]
@@ -154,7 +154,7 @@ services:
       timeout: 5s
       retries: 5
     extends:
-      file: docker-compose-common-configuration.yaml
+      file: configuration/rabbitmq-configuration.yaml
       service: rabbitmq-configuration
 
   redis:
@@ -163,7 +163,7 @@ services:
     ports:
       - "6379:6379"
     extends:
-      file: docker-compose-common-configuration.yaml
+      file: configuration/redis-configuration.yaml
       service: redis-configuration
     healthcheck:
       test: [ "CMD", "redis-cli", "ping" ]
