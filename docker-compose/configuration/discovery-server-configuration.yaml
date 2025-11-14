@@ -1,0 +1,13 @@
+services:
+
+  discovery-server-microservice-configuration:
+    extends:
+      file: microservice-configuration.yaml
+      service: microservice-configuration
+
+    environment:
+      - "spring.config.import=configserver:http://configuration-server:8071"
+
+    depends_on:
+      configuration-server:
+        condition: service_healthy

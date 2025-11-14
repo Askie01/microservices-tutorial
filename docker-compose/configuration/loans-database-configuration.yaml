@@ -1,0 +1,14 @@
+services:
+
+  loans-database-configuration:
+    extends:
+      file: common-configuration.yaml
+      service: common-configuration
+
+    volumes:
+      - "../../sql/loans/schema:/docker-entrypoint-initdb.d"
+      - "../../sql/loans/data/development:/var/lib/mysql"
+
+    environment:
+      - "MYSQL_ROOT_PASSWORD=root"
+      - "MYSQL_DATABASE=loans-database"

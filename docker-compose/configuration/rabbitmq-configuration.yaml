@@ -1,0 +1,6 @@
+services:
+
+  rabbitmq-configuration:
+    extends:
+      file: common-configuration.yaml
+      service: common-configuration

@@ -1,0 +1,11 @@
+services:
+
+  microservice-configuration:
+    extends:
+      file: common-configuration.yaml
+      service: common-configuration
+
+    deploy:
+      resources:
+        limits:
+          memory: 700m

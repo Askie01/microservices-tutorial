@@ -1,0 +1,31 @@
+services:
+
+  accounts-microservice-configuration:
+    extends:
+      file: microservice-configuration.yaml
+      service: microservice-configuration
+
+    environment:
+      - "spring.config.import=configserver:http://configuration-server:8071"
+      - "spring.datasource.url=jdbc:mysql://accounts-database:3306/accounts-database"
+      - "eureka.client.service-url.defaultZone=http://discovery-server:8070/eureka/"
+      - "spring.rabbitmq.host=rabbitmq"
+
+    depends_on:
+      configuration-server:
+        condition: service_healthy
+
+      accounts-database:
+        condition: service_healthy
+
+      discovery-server:
+        condition: service_healthy
+
+      rabbitmq:
+        condition: service_healthy
+
+      cards:
+        condition: service_healthy
+
+      loans:
+        condition: service_healthy

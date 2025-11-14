@@ -1,0 +1,23 @@
+services:
+
+  api-gateway-microservice-configuration:
+    extends:
+      file: microservice-configuration.yaml
+      service: microservice-configuration
+
+    environment:
+      - "eureka.client.service-url.defaultZone=http://discovery-server:8070/eureka/"
+      - "spring.data.redis.host=redis"
+
+    depends_on:
+      discovery-server:
+        condition: service_healthy
+
+      accounts:
+        condition: service_healthy
+
+      cards:
+        condition: service_healthy
+
+      loans:
+        condition: service_healthy

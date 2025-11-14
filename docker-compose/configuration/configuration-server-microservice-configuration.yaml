@@ -1,0 +1,13 @@
+services:
+
+  configuration-server-microservice-configuration:
+    extends:
+      file: microservice-configuration.yaml
+      service: microservice-configuration
+
+    environment:
+      - "spring.rabbitmq.host=rabbitmq"
+
+    depends_on:
+      rabbitmq:
+        condition: service_healthy

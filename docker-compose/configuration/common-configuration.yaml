@@ -1,0 +1,11 @@
+services:
+
+  network-configuration:
+    networks:
+      - "microservices-network"
+
+  common-configuration:
+    extends:
+      service: network-configuration
+
+    tty: true

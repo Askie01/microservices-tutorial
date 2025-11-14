@@ -1,0 +1,14 @@
+services:
+
+  accounts-database-configuration:
+    extends:
+      file: common-configuration.yaml
+      service: common-configuration
+
+    volumes:
+      - "../../sql/accounts/schema:/docker-entrypoint-initdb.d"
+      - "../../sql/accounts/data/development:/var/lib/mysql"
+
+    environment:
+      - "MYSQL_ROOT_PASSWORD=root"
+      - "MYSQL_DATABASE=accounts-database"

@@ -1,0 +1,14 @@
+services:
+
+  cards-database-configuration:
+    extends:
+      file: common-configuration.yaml
+      service: common-configuration
+
+    volumes:
+      - "../../sql/cards/schema:/docker-entrypoint-initdb.d"
+      - "../../sql/cards/data/production:/var/lib/mysql"
+
+    environment:
+      - "MYSQL_ROOT_PASSWORD=root"
+      - "MYSQL_DATABASE=cards-database"
