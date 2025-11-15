@@ -9,6 +9,10 @@ spring:
     import: optional:configserver:http://localhost:8071/
 
 management:
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
   endpoint:
     health:
       probes:

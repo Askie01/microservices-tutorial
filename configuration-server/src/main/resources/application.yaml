@@ -28,6 +28,10 @@ spring:
     password: guest
 
 management:
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
   endpoint:
     health:
       probes:

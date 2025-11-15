@@ -27,6 +27,10 @@ spring:
     password: guest
 
 management:
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
   info:
     env:
       enabled: true

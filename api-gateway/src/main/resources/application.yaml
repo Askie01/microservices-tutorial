@@ -30,6 +30,10 @@ management:
     env:
       enabled: true
 
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
   endpoint:
     gateway:
       access: unrestricted
