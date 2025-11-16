@@ -26,4 +26,4 @@ sql/cards/data
 sql/loans/data
 
 ### GRAFANA ###
-docker-compose/grafana
+docker-compose/observability/.data
