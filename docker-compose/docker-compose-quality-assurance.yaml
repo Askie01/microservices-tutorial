@@ -376,6 +376,19 @@ services:
       file: ./configuration/common-configuration.yaml
       service: common-configuration
 
+  tempo:
+    image: "grafana/tempo:latest"
+    container_name: "tempo"
+    command: [ "-config.file=/etc/tempo.yaml" ]
+    ports:
+      - "3110:3100"
+      - "4318:4318"
+    volumes:
+      - ./observability/tempo/tempo.yaml:/etc/tempo.yaml
+    extends:
+      file: ./configuration/common-configuration.yaml
+      service: common-configuration
+
 networks:
   microservices-network:
     driver: "bridge"
