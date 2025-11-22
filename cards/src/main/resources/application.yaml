@@ -59,3 +59,7 @@ info:
     name: cards-microservice
     description: Askie01's cards microservice
     version: 1.0.0
+
+logging:
+  pattern:
+    level: "%5p [${spring.application.name},%X{trace_id},%X{span_id}]"
