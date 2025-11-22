@@ -8,6 +8,7 @@ RUN apt-get update \
 USER appuser
 WORKDIR /app
 
+COPY --chown=appuser:appuser target/opentelemetry-javaagent.jar /app/opentelemetry-javaagent.jar
 COPY --chown=appuser:appuser target/configuration-server-0.0.1-SNAPSHOT.jar /app/app.jar
 
 ENTRYPOINT ["java","-jar","/app/app.jar"]
