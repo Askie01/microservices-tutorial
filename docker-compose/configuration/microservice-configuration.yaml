@@ -5,6 +5,12 @@ services:
       file: common-configuration.yaml
       service: common-configuration
 
+    environment:
+      - "JAVA_TOOL_OPTIONS=-javaagent:/app/opentelemetry-javaagent.jar"
+      - "OTEL_EXPORTER_OTLP_ENDPOINT=http://tempo:4318"
+      - "OTEL_METRICS_EXPORTER=none"
+      - "OTEL_LOGS_EXPORTER=none"
+
     deploy:
       resources:
         limits:
