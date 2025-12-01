@@ -24,6 +24,7 @@ target/
 sql/accounts/data
 sql/cards/data
 sql/loans/data
+sql/keycloak/data
 
 ### GRAFANA ###
 docker-compose/observability/.data
