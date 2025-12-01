@@ -5,8 +5,12 @@ services:
       file: microservice-configuration.yaml
       service: microservice-configuration
 
+    ports:
+      - "${discovery_server_microservice_exposed_port}:${discovery_server_microservice_port}"
+
     environment:
-      - "spring.config.import=configserver:http://configuration-server:8071"
+      - "server.port=${discovery_server_microservice_port}"
+      - "spring.config.import=configserver:http://configuration-server:${configuration_server_microservice_port}"
 
     depends_on:
       configuration-server:

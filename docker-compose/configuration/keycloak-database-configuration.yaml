@@ -1,0 +1,18 @@
+services:
+
+  keycloak-database-configuration:
+    extends:
+      file: common-configuration.yaml
+      service: common-configuration
+
+    ports:
+      - "${keycloak_database_exposed_port}:3306"
+
+    volumes:
+      - "../../sql/keycloak/data/${environment}:/var/lib/mysql"
+
+    environment:
+      - "MYSQL_USER=${keycloak_database_username}"
+      - "MYSQL_PASSWORD=${keycloak_database_password}"
+      - "MYSQL_DATABASE=keycloak"
+      - "MYSQL_ROOT_PASSWORD=${keycloak_database_root_password}"

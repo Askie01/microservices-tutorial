@@ -1,0 +1,26 @@
+services:
+
+  keycloak-configuration:
+    extends:
+      file: common-configuration.yaml
+      service: common-configuration
+
+    ports:
+      - "${keycloak_exposed_port}:8080"
+
+    volumes:
+      - "./keycloak/import/${keycloak_realm}.json/:/opt/keycloak/data/import:ro"
+
+    environment:
+      - "KC_BOOTSTRAP_ADMIN_USERNAME=${keycloak_admin_username}"
+      - "KC_BOOTSTRAP_ADMIN_PASSWORD=${keycloak_admin_password}"
+      - "KC_DB=mysql"
+      - "KC_DB_URL=jdbc:mysql://keycloak-database:3306/keycloak?useSSL=false&allowPublicKeyRetrieval=true"
+      - "KC_DB_USERNAME=${keycloak_database_username}"
+      - "KC_DB_PASSWORD=${keycloak_database_password}"
+      - "KC_HEALTH_ENABLED=true"
+      - "KC_METRICS_ENABLED=true"
+
+    depends_on:
+      keycloak-database:
+        condition: service_healthy

@@ -5,7 +5,11 @@ services:
       file: microservice-configuration.yaml
       service: microservice-configuration
 
+    ports:
+      - "${configuration_server_microservice_exposed_port}:${configuration_server_microservice_port}"
+
     environment:
+      - "server.port=${configuration_server_microservice_port}"
       - "spring.rabbitmq.host=rabbitmq"
 
     depends_on:

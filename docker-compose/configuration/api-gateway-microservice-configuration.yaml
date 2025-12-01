@@ -5,10 +5,14 @@ services:
       file: microservice-configuration.yaml
       service: microservice-configuration
 
+    ports:
+      - "${api_gateway_microservice_exposed_port}:${api_gateway_microservice_port}"
+
     environment:
-      - "eureka.client.service-url.defaultZone=http://discovery-server:8070/eureka/"
+      - "server.port=${api_gateway_microservice_port}"
+      - "eureka.client.service-url.defaultZone=http://discovery-server:${discovery_server_microservice_port}/eureka/"
       - "spring.data.redis.host=redis"
-      - "spring.security.oauth2.resource-server.jwt.jwk-set-uri=http://keycloak:8080/realms/master/protocol/openid-connect/certs"
+      - "spring.security.oauth2.resource-server.jwt.jwk-set-uri=http://keycloak:${keycloak_port}/realms/master/protocol/openid-connect/certs"
 
     depends_on:
       discovery-server:

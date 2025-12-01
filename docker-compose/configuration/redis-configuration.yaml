@@ -4,3 +4,6 @@ services:
     extends:
       file: common-configuration.yaml
       service: common-configuration
+
+    ports:
+      - "${redis_database_exposed_port}:6379"

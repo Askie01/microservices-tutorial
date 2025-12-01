@@ -5,10 +5,15 @@ services:
       file: common-configuration.yaml
       service: common-configuration
 
+    ports:
+      - "${loans_database_port}:3306"
+
     volumes:
       - "../../sql/loans/schema:/docker-entrypoint-initdb.d"
-      - "../../sql/loans/data/development:/var/lib/mysql"
+      - "../../sql/loans/data/${environment}:/var/lib/mysql"
 
     environment:
-      - "MYSQL_ROOT_PASSWORD=root"
-      - "MYSQL_DATABASE=loans-database"
+      - "MYSQL_USER=${loans_database_username}"
+      - "MYSQL_PASSWORD=${loans_database_password}"
+      - "MYSQL_DATABASE=loans"
+      - "MYSQL_ROOT_PASSWORD=${loans_database_root_password}"

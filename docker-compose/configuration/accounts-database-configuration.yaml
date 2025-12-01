@@ -5,10 +5,15 @@ services:
       file: common-configuration.yaml
       service: common-configuration
 
+    ports:
+      - "${accounts_database_exposed_port}:3306"
+
     volumes:
       - "../../sql/accounts/schema:/docker-entrypoint-initdb.d"
-      - "../../sql/accounts/data/development:/var/lib/mysql"
+      - "../../sql/accounts/data/${environment}:/var/lib/mysql"
 
     environment:
-      - "MYSQL_ROOT_PASSWORD=root"
-      - "MYSQL_DATABASE=accounts-database"
+      - "MYSQL_USER=${accounts_database_username}"
+      - "MYSQL_PASSWORD=${accounts_database_password}"
+      - "MYSQL_DATABASE=accounts"
+      - "MYSQL_ROOT_PASSWORD=${accounts_database_root_password}"

@@ -4,3 +4,7 @@ services:
     extends:
       file: common-configuration.yaml
       service: common-configuration
+
+    ports:
+      - "${rabbitmq_amqp_exposed_port}:5672"
+      - "${rabbitmq_management_exposed_port}:15672"

@@ -5,10 +5,15 @@ services:
       file: common-configuration.yaml
       service: common-configuration
 
+    ports:
+      - "${cards_database_exposed_port}:3306"
+
     volumes:
       - "../../sql/cards/schema:/docker-entrypoint-initdb.d"
-      - "../../sql/cards/data/production:/var/lib/mysql"
+      - "../../sql/cards/data/${environment}:/var/lib/mysql"
 
     environment:
-      - "MYSQL_ROOT_PASSWORD=root"
-      - "MYSQL_DATABASE=cards-database"
+      - "MYSQL_USER=${cards_database_username}"
+      - "MYSQL_PASSWORD=${cards_database_password}"
+      - "MYSQL_DATABASE=cards"
+      - "MYSQL_ROOT_PASSWORD=${cards_database_root_password}"
