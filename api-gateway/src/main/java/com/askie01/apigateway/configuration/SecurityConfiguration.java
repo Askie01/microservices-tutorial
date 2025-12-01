@@ -17,7 +17,8 @@ public class SecurityConfiguration {
         http.authorizeExchange(config -> config
                 .pathMatchers("askie01/accounts/**").hasAuthority("ACCOUNTS")
                 .pathMatchers("askie01/loans/**").hasAuthority("LOANS")
-                .pathMatchers("askie01/cards/**").hasAuthority("CARDS"));
+                .pathMatchers("askie01/cards/**").hasAuthority("CARDS")
+                .pathMatchers("/actuator/health/**").permitAll());
         http.oauth2ResourceServer(config -> config
                 .jwt(jwtConfiguration -> jwtConfiguration
                         .jwtAuthenticationConverter(authenticationConverter)));
