@@ -11,7 +11,7 @@ services:
     environment:
       - "spring.profiles.active=${loans_microservice_active_profiles}"
       - "spring.config.import=configserver:http://configuration-server:${configuration_server_microservice_port}"
-      - "spring.datasource.url=jdbc:mysql://loans-database:${loans_database_port}/loans"
+      - "spring.datasource.url=jdbc:mysql://loans-database:3306/loans"
       - "spring.datasource.username=${loans_database_username}"
       - "spring.datasource.password=${loans_database_password}"
       - "eureka.client.service-url.defaultZone=http://discovery-server:${discovery_server_microservice_port}/eureka/"

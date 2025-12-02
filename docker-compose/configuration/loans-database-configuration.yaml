@@ -6,7 +6,7 @@ services:
       service: common-configuration
 
     ports:
-      - "${loans_database_port}:3306"
+      - "${loans_database_exposed_port}:3306"
 
     volumes:
       - "../../sql/loans/schema:/docker-entrypoint-initdb.d"

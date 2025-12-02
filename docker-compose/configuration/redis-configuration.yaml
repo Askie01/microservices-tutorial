@@ -7,3 +7,7 @@ services:
 
     ports:
       - "${redis_database_exposed_port}:6379"
+
+    depends_on:
+      grafana:
+        condition: service_healthy

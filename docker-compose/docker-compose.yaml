@@ -6,8 +6,7 @@ services:
     extends:
       file: ./configuration/accounts-microservice-configuration.yaml
       service: accounts-microservice-configuration
-    env_file:
-      path: ./configuration/environment/development.env
+    env_file: "./configuration/environment/development.env"
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
       start_period: 20s
@@ -21,8 +20,7 @@ services:
     extends:
       file: ./configuration/accounts-database-configuration.yaml
       service: accounts-database-configuration
-    env_file:
-      - configuration/environment/development.env
+    env_file: "./configuration/environment/development.env"
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       start_period: 20s
@@ -36,8 +34,7 @@ services:
     extends:
       file: ./configuration/loans-microservice-configuration.yaml
       service: loans-microservice-configuration
-    env_file:
-      - ./configuration/environment/development.env
+    env_file: "./configuration/environment/development.env"
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8090/actuator/health" ]
       start_period: 20s
@@ -51,8 +48,7 @@ services:
     extends:
       file: ./configuration/loans-database-configuration.yaml
       service: loans-database-configuration
-    env_file:
-      - ./configuration/environment/development.env
+    env_file: "./configuration/environment/development.env"
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       start_period: 20s
@@ -66,8 +62,7 @@ services:
     extends:
       file: ./configuration/cards-microservice-configuration.yaml
       service: cards-microservice-configuration
-    env_file:
-      - ./configuration/environment/development.env
+    env_file: "./configuration/environment/development.env"
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:9000/actuator/health" ]
       start_period: 20s
@@ -81,6 +76,7 @@ services:
     extends:
       file: ./configuration/cards-database-configuration.yaml
       service: cards-database-configuration
+    env_file: "./configuration/environment/development.env"
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       start_period: 20s
@@ -94,8 +90,7 @@ services:
     extends:
       file: ./configuration/configuration-server-microservice-configuration.yaml
       service: configuration-server-microservice-configuration
-    env_file:
-      - ./configuration/environment/development.env
+    env_file: "./configuration/environment/development.env"
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8071/actuator/health" ]
       start_period: 20s
@@ -109,8 +104,7 @@ services:
     extends:
       file: ./configuration/discovery-server-configuration.yaml
       service: discovery-server-microservice-configuration
-    env_file:
-      - ./configuration/environment/development.env
+    env_file: "./configuration/environment/development.env"
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8070/actuator/health" ]
       start_period: 20s
@@ -124,8 +118,7 @@ services:
     extends:
       file: ./configuration/api-gateway-microservice-configuration.yaml
       service: api-gateway-microservice-configuration
-    env_file:
-      - ./configuration/environment/development.env
+    env_file: "./configuration/environment/development.env"
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8072/actuator/health" ]
       start_period: 20s
@@ -139,8 +132,7 @@ services:
     extends:
       file: ./configuration/rabbitmq-configuration.yaml
       service: rabbitmq-configuration
-    env_file:
-      - ./configuration/environment/development.env
+    env_file: "./configuration/environment/development.env"
     healthcheck:
       test: [ "CMD", "rabbitmq-diagnostics", "check_port_connectivity" ]
       start_period: 10s
@@ -154,8 +146,7 @@ services:
     extends:
       file: ./configuration/redis-configuration.yaml
       service: redis-configuration
-    env_file:
-      - ./configuration/environment/development.env
+    env_file: "./configuration/environment/development.env"
     healthcheck:
       test: [ "CMD", "redis-cli", "ping" ]
       start_period: 10s
@@ -168,10 +159,9 @@ services:
     container_name: "keycloak"
     command: "start-dev --import-realm"
     extends:
-      file: ./configuration/common-configuration.yaml
-      service: common-configuration
-    env_file:
-      - ./configuration/environment/development.env
+      file: ./configuration/keycloak-configuration.yaml
+      service: keycloak-configuration
+    env_file: "./configuration/environment/development.env"
 
   keycloak-database:
     image: "mysql:latest"
@@ -179,8 +169,7 @@ services:
     extends:
       file: configuration/keycloak-database-configuration.yaml
       service: keycloak-database-configuration
-    env_file:
-      - configuration/environment/development.env
+    env_file: "./configuration/environment/development.env"
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       start_period: 20s
