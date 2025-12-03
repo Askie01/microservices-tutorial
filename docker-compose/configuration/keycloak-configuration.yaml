@@ -9,7 +9,7 @@ services:
       - "${keycloak_exposed_port}:8080"
 
     volumes:
-      - "../keycloak/import/${keycloak_realm}.json/:/opt/keycloak/data/import:ro"
+      - "../keycloak/import/${keycloak_realm}.json:/opt/keycloak/data/import/${keycloak_realm}.json:ro"
 
     environment:
       - "KC_BOOTSTRAP_ADMIN_USERNAME=${keycloak_admin_username}"
