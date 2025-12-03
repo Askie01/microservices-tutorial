@@ -12,9 +12,9 @@ spring:
     import: optional:configserver:http://localhost:8071/
 
   datasource:
-    url: jdbc:mysql://localhost:3308/cards-database
-    username: root
-    password: root
+    url: jdbc:mysql://localhost:3308/cards
+    username: cards
+    password: cards
 
   jpa:
     hibernate:

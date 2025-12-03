@@ -12,9 +12,9 @@ spring:
     import: optional:configserver:http://localhost:8071/
 
   datasource:
-    url: jdbc:mysql://localhost:3307/loans-database
-    username: root
-    password: root
+    url: jdbc:mysql://localhost:3307/loans
+    username: loans
+    password: loans
 
   jpa:
     hibernate:
