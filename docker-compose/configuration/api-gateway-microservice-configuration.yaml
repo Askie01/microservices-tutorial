@@ -12,7 +12,7 @@ services:
       - "server.port=${api_gateway_microservice_port}"
       - "eureka.client.service-url.defaultZone=http://discovery-server:${discovery_server_microservice_port}/eureka/"
       - "spring.data.redis.host=redis"
-      - "spring.security.oauth2.resource-server.jwt.jwk-set-uri=http://keycloak:8080/realms/master/protocol/openid-connect/certs"
+      - "spring.security.oauth2.resource-server.jwt.jwk-set-uri=http://keycloak:8080/realms/${keycloak_realm}/protocol/openid-connect/certs"
 
     depends_on:
       discovery-server:
