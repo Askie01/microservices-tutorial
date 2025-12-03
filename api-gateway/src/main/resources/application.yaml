@@ -9,7 +9,7 @@ spring:
     oauth2:
       resource-server:
         jwt:
-          jwk-set-uri: "http://localhost:7080/realms/master/protocol/openid-connect/certs"
+          jwk-set-uri: "http://localhost:7080/realms/development/protocol/openid-connect/certs"
 
   cloud:
     gateway:
