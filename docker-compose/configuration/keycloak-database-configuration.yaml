@@ -16,3 +16,10 @@ services:
       - "MYSQL_PASSWORD=${keycloak_database_password}"
       - "MYSQL_DATABASE=keycloak"
       - "MYSQL_ROOT_PASSWORD=${keycloak_database_root_password}"
+
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      start_period: 20s
+      interval: 10s
+      timeout: 5s
+      retries: 5

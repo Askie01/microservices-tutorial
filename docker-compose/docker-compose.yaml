@@ -6,13 +6,6 @@ services:
     extends:
       file: ./configuration/accounts-microservice-configuration.yaml
       service: accounts-microservice-configuration
-    env_file: "./configuration/environment/development.env"
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
-      start_period: 20s
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
   accounts-database:
     image: "mysql:latest"
@@ -20,13 +13,6 @@ services:
     extends:
       file: ./configuration/accounts-database-configuration.yaml
       service: accounts-database-configuration
-    env_file: "./configuration/environment/development.env"
-    healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
-      start_period: 20s
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
   loans:
     image: "askie01/loans:latest"
@@ -34,13 +20,6 @@ services:
     extends:
       file: ./configuration/loans-microservice-configuration.yaml
       service: loans-microservice-configuration
-    env_file: "./configuration/environment/development.env"
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8090/actuator/health" ]
-      start_period: 20s
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
   loans-database:
     image: "mysql:latest"
@@ -48,13 +27,6 @@ services:
     extends:
       file: ./configuration/loans-database-configuration.yaml
       service: loans-database-configuration
-    env_file: "./configuration/environment/development.env"
-    healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
-      start_period: 20s
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
   cards:
     image: "askie01/cards:latest"
@@ -62,13 +34,6 @@ services:
     extends:
       file: ./configuration/cards-microservice-configuration.yaml
       service: cards-microservice-configuration
-    env_file: "./configuration/environment/development.env"
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:9000/actuator/health" ]
-      start_period: 20s
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
   cards-database:
     image: "mysql:latest"
@@ -76,13 +41,6 @@ services:
     extends:
       file: ./configuration/cards-database-configuration.yaml
       service: cards-database-configuration
-    env_file: "./configuration/environment/development.env"
-    healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
-      start_period: 20s
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
   configuration-server:
     image: "askie01/configuration-server:latest"
@@ -90,13 +48,6 @@ services:
     extends:
       file: ./configuration/configuration-server-microservice-configuration.yaml
       service: configuration-server-microservice-configuration
-    env_file: "./configuration/environment/development.env"
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8071/actuator/health" ]
-      start_period: 20s
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
   discovery-server:
     image: "askie01/discovery-server:latest"
@@ -104,13 +55,6 @@ services:
     extends:
       file: ./configuration/discovery-server-configuration.yaml
       service: discovery-server-microservice-configuration
-    env_file: "./configuration/environment/development.env"
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8070/actuator/health" ]
-      start_period: 20s
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
   api-gateway:
     image: "askie01/api-gateway:latest"
@@ -118,13 +62,6 @@ services:
     extends:
       file: ./configuration/api-gateway-microservice-configuration.yaml
       service: api-gateway-microservice-configuration
-    env_file: "./configuration/environment/development.env"
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8072/actuator/health" ]
-      start_period: 20s
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
   rabbitmq:
     image: "rabbitmq:4-management"
@@ -132,13 +69,6 @@ services:
     extends:
       file: ./configuration/rabbitmq-configuration.yaml
       service: rabbitmq-configuration
-    env_file: "./configuration/environment/development.env"
-    healthcheck:
-      test: [ "CMD", "rabbitmq-diagnostics", "check_port_connectivity" ]
-      start_period: 10s
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
   redis:
     image: "redis:latest"
@@ -146,13 +76,6 @@ services:
     extends:
       file: ./configuration/redis-configuration.yaml
       service: redis-configuration
-    env_file: "./configuration/environment/development.env"
-    healthcheck:
-      test: [ "CMD", "redis-cli", "ping" ]
-      start_period: 10s
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
   keycloak:
     image: "quay.io/keycloak/keycloak:latest"
@@ -161,7 +84,6 @@ services:
     extends:
       file: ./configuration/keycloak-configuration.yaml
       service: keycloak-configuration
-    env_file: "./configuration/environment/development.env"
 
   keycloak-database:
     image: "mysql:latest"
@@ -169,13 +91,6 @@ services:
     extends:
       file: configuration/keycloak-database-configuration.yaml
       service: keycloak-database-configuration
-    env_file: "./configuration/environment/development.env"
-    healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
-      start_period: 20s
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
   minio:
     image: "minio/minio:latest"

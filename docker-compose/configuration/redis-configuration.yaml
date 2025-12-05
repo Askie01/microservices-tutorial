@@ -11,3 +11,10 @@ services:
     depends_on:
       grafana:
         condition: service_healthy
+
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      start_period: 10s
+      interval: 10s
+      timeout: 5s
+      retries: 5

@@ -17,3 +17,10 @@ services:
       - "MYSQL_PASSWORD=${accounts_database_password}"
       - "MYSQL_DATABASE=accounts"
       - "MYSQL_ROOT_PASSWORD=${accounts_database_root_password}"
+
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      start_period: 20s
+      interval: 10s
+      timeout: 5s
+      retries: 5
