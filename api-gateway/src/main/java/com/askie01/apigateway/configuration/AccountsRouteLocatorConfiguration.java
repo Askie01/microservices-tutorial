@@ -15,9 +15,9 @@ public class AccountsRouteLocatorConfiguration {
         final String currentDateTime = LocalDateTime.now().toString();
         return routeLocatorBuilder.routes()
                 .route(config -> config
-                        .path("/askie01/accounts/**")
+                        .path("/askie01/accounts-service/**")
                         .filters(filter -> filter
-                                .rewritePath("/askie01/accounts(?:/(?<segment>.*))?", "/accounts${segment}")
+                                .stripPrefix(2)
                                 .addResponseHeader("X-Response-Time", currentDateTime))
                         .uri("lb://accounts"))
                 .build();

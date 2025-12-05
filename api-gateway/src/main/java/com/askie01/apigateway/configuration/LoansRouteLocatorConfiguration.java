@@ -15,9 +15,9 @@ public class LoansRouteLocatorConfiguration {
         final String currentDateTime = LocalDateTime.now().toString();
         return routeLocatorBuilder.routes()
                 .route(configuration -> configuration
-                        .path("/askie01/loans/**")
+                        .path("/askie01/loans-service/**")
                         .filters(filter -> filter
-                                .rewritePath("/askie01/loans(?:/(?<segment>.*))?", "/loans${segment}")
+                                .stripPrefix(2)
                                 .addResponseHeader("X-Response-Time", currentDateTime))
                         .uri("lb://loans"))
                 .build();

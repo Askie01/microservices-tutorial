@@ -15,11 +15,11 @@ public class CustomersRouteLocatorConfiguration {
         final String currentDateTime = LocalDateTime.now().toString();
         return routeLocatorBuilder.routes()
                 .route(configuration -> configuration
-                        .path("/askie01/customers/**")
+                        .path("/askie01/customers-service/**")
                         .filters(filter -> filter
-                                .rewritePath("/askie01/customers(?:/(?<segment>.*))?", "/customers${segment}")
+                                .stripPrefix(2)
                                 .addResponseHeader("X-Response-Time", currentDateTime))
-                        .uri("lb://accounts"))  //TODO: Change it to customers service later on.
+                        .uri("lb://customers"))
                 .build();
     }
 }

@@ -13,7 +13,7 @@ import org.springframework.security.web.server.util.matcher.ServerWebExchangeMat
 @EnableWebFluxSecurity
 public class CardsSecurityWebFilterChainConfiguration {
 
-    private static final String CARDS_ENDPOINT = "/askie01/cards/**";
+    private static final String CARDS_ENDPOINT = "/askie01/cards-service/**";
 
     @Bean
     public SecurityWebFilterChain cardsSecurityWehFilterChain(ServerHttpSecurity http,

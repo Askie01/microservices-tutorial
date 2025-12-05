@@ -13,7 +13,7 @@ import org.springframework.security.web.server.util.matcher.ServerWebExchangeMat
 @EnableWebFluxSecurity
 public class CustomersSecurityWebFilterChainConfiguration {
 
-    private static final String CUSTOMERS_ENDPOINT = "/askie01/customers/**";
+    private static final String CUSTOMERS_ENDPOINT = "/askie01/customers-service/**";
 
     @Bean
     public SecurityWebFilterChain customersSecurityWebFilterChain(ServerHttpSecurity http,
