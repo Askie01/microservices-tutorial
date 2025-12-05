@@ -9,13 +9,13 @@ services:
       - "${rabbitmq_amqp_exposed_port}:5672"
       - "${rabbitmq_management_exposed_port}:15672"
 
-    depends_on:
-      grafana:
-        condition: service_healthy
-
     healthcheck:
       test: [ "CMD", "rabbitmq-diagnostics", "check_port_connectivity" ]
       start_period: 10s
       interval: 10s
       timeout: 5s
       retries: 5
+
+    depends_on:
+      grafana:
+        condition: service_healthy

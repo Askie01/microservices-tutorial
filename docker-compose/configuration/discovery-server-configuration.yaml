@@ -12,13 +12,13 @@ services:
       - "server.port=${discovery_server_microservice_port}"
       - "spring.config.import=configserver:http://configuration-server:${configuration_server_microservice_port}"
 
-    depends_on:
-      configuration-server:
-        condition: service_healthy
-
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8070/actuator/health" ]
       start_period: 20s
       interval: 10s
       timeout: 5s
       retries: 5
+
+    depends_on:
+      configuration-server:
+        condition: service_healthy

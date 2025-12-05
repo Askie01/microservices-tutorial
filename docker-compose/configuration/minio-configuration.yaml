@@ -1,0 +1,32 @@
+services:
+
+  minio-configuration:
+    extends:
+      file: common-configuration.yaml
+      service: common-configuration
+
+    ports:
+      - "9000"
+
+    entrypoint:
+      - sh
+      - -euc
+      - |
+        mkdir -p /data/loki-data && \
+        mkdir -p /data/loki-ruler && \
+        minio server /data
+
+    volumes:
+      - "../observability/.data/minio:/data"
+
+    environment:
+      - MINIO_ROOT_USER=loki
+      - MINIO_ROOT_PASSWORD=supersecret
+      - MINIO_PROMETHEUS_AUTH_TYPE=public
+      - MINIO_UPDATE=off
+
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:9000/minio/health/live" ]
+      interval: 15s
+      timeout: 20s
+      retries: 5

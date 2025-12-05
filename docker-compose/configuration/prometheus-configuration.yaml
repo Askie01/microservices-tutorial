@@ -1,0 +1,12 @@
+services:
+
+  prometheus-configuration:
+    extends:
+      file: common-configuration.yaml
+      service: common-configuration
+
+    ports:
+      - "9090:9090"
+
+    volumes:
+      - "../observability/prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml"

@@ -1,0 +1,13 @@
+services:
+
+  tempo-configuration:
+    extends:
+      file: common-configuration.yaml
+      service: common-configuration
+
+    ports:
+      - "3110:3100"
+      - "4318:4318"
+
+    volumes:
+      - "../observability/tempo/tempo.yaml:/etc/tempo.yaml"

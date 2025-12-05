@@ -1,0 +1,18 @@
+services:
+
+  loki-backend-configuration:
+    extends:
+      file: microservice-configuration.yaml
+      service: microservice-configuration
+
+    ports:
+      - "3100"
+      - "7946"
+
+    volumes:
+      - "../observability/loki/loki-config.yaml:/etc/loki/config.yaml"
+
+    command: "-config.file=/etc/loki/config.yaml -target=backend -legacy-read-mode=false"
+
+    depends_on:
+      - gateway

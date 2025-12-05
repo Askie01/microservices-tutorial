@@ -1,0 +1,29 @@
+services:
+
+  grafana-configuration:
+    extends:
+      file: common-configuration.yaml
+      service: common-configuration
+
+    ports:
+      - "3000:3000"
+
+    entrypoint: [ "sh","-euc","/run.sh" ]
+
+    volumes:
+      - "../observability/grafana/datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml"
+      - "../observability/.data/grafana:/var/lib/grafana"
+
+    environment:
+      - "GF_PATHS_PROVISIONING=/etc/grafana/provisioning"
+      - "GF_AUTH_ANONYMOUS_ENABLED=true"
+      - "GF_AUTH_ANONYMOUS_ORG_ROLE=Admin"
+
+    healthcheck:
+      test: [ "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3000/api/health || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+    depends_on:
+      - gateway
