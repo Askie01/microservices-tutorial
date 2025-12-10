@@ -3,6 +3,7 @@ package com.askie01.accounts.service;
 import com.askie01.accounts.constant.AccountType;
 import com.askie01.accounts.constant.BranchAddress;
 import com.askie01.accounts.dto.AccountDTO;
+import com.askie01.accounts.dto.AccountsMessageDTO;
 import com.askie01.accounts.dto.CustomerDTO;
 import com.askie01.accounts.entity.Account;
 import com.askie01.accounts.entity.Customer;
@@ -13,12 +14,16 @@ import com.askie01.accounts.mapper.CustomerMapper;
 import com.askie01.accounts.repositories.AccountRepository;
 import com.askie01.accounts.repositories.CustomerRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CoreAccountService implements AccountService {
 
+    private final StreamBridge streamBridge;
     private final AccountRepository accountRepository;
     private final CustomerRepository customerRepository;
 
@@ -32,7 +37,9 @@ public class CoreAccountService implements AccountService {
             throw new MobilePhoneAlreadyExistsException(mobileNumber);
         }
         final Customer customer = CustomerMapper.mapToCustomer(customerDTO);
-        return createDefaultAccount(customer);
+        final Account newAccount = createDefaultAccount(customer);
+        sendCommunication(newAccount);
+        return newAccount;
     }
 
     private Account createDefaultAccount(Customer customer) {
@@ -42,6 +49,23 @@ public class CoreAccountService implements AccountService {
                 .customer(customer)
                 .build();
         return accountRepository.save(account);
+    }
+
+    //TODO: This method is outside of this service scope - move it to the communication-related service.
+    private void sendCommunication(Account account) {
+        final Long accountNumber = account.getId();
+        final String name = account.getCustomer().getName();
+        final String email = account.getCustomer().getEmail();
+        final String mobileNumber = account.getCustomer().getMobileNumber();
+        final AccountsMessageDTO message = AccountsMessageDTO.builder()
+                .accountNumber(accountNumber)
+                .name(name)
+                .email(email)
+                .mobileNumber(mobileNumber)
+                .build();
+        log.atInfo().log("Sending communication request for the details: {}", message);
+        final boolean result = streamBridge.send("sendCommunication-out-0", message);
+        log.atInfo().log("Is the communication request successfully processed? : {}", result);
     }
 
     @Override
