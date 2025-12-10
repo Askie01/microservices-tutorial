@@ -28,10 +28,16 @@ spring:
     connection-timeout: 10s
 
   cloud:
+    function:
+      definition: updateCommunication
+
     stream:
       bindings:
         sendCommunication-out-0:
           destination: send-communication
+
+        updateCommunication-in-0:
+          destination: update-communication
 
 management:
   info:
