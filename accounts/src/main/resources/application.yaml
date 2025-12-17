@@ -27,17 +27,8 @@ spring:
     password: guest
     connection-timeout: 10s
 
-  cloud:
-    function:
-      definition: updateCommunication
-
-    stream:
-      bindings:
-        sendCommunication-out-0:
-          destination: send-communication
-
-        updateCommunication-in-0:
-          destination: update-communication
+  kafka:
+    bootstrap-servers: localhost:9092
 
 management:
   info:
@@ -68,7 +59,7 @@ eureka:
       defaultZone: http://localhost:8070/eureka/
 
 resilience4j:
-  circuitbreaker:
+  circuit-breaker:
     instances:
       cards-api-client-circuit-breaker:
         base-config: default
@@ -83,7 +74,7 @@ resilience4j:
         failure-rate-threshold: 50
         wait-duration-in-open-state: 10s
 
-  timelimiter:
+  time-limiter:
     instances:
       cards-api-client-time-limiter:
         base-config: default
