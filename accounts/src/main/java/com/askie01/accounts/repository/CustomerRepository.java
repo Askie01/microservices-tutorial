@@ -1,6 +1,6 @@
-package com.askie01.accounts.repositories;
+package com.askie01.accounts.repository;
 
-import com.askie01.accounts.entity.Customer;
+import com.askie01.accounts.model.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
