@@ -1,7 +1,7 @@
 package com.askie01.accounts.mapper;
 
 import com.askie01.accounts.dto.CustomerDTO;
-import com.askie01.accounts.entity.Customer;
+import com.askie01.accounts.model.Customer;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

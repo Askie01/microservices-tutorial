@@ -1,4 +1,4 @@
-package com.askie01.accounts.entity;
+package com.askie01.accounts.model;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
