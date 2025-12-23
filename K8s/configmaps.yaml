@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: askie01-configmap
+data:
+  SPRING_PROFILES_ACTIVE: "development"
+  SPRING_CONFIG_IMPORT: "configserver:http://config-server:8071"
+  EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE: "http://eureka-server:8761/eureka"
+  CONFIGURATION_SERVER_APPLICATION_NAME: "configuration-server"
+  DISCOVERY_SERVER_APPLICATION_NAME: "discovery-server"
+  ACCOUNTS_APPLICATION_NAME: "accounts"
+  LOANS_APPLICATION_NAME: "loans"
+  CARDS_APPLICATION_NAME: "cards"
+  API_GATEWAY_APPLICATION_NAME: "api-gateway"
+  KEYCLOAK_ADMIN: "admin"
+  KEYCLOAK_ADMIN_PASSWORD: "admin"
+  SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI: "http://keycloak:8080/realms/master/protocol/openid-connect/certs"
